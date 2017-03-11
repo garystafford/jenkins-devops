@@ -1,6 +1,8 @@
 # Jenkins CI with DevOps tools
 
-Builds Docker image from latest jenkins:alpine Docker image and installs the following tool:
+Builds Docker image from latest jenkins:alpine Docker image and installs common DevOps tools.
+
+## Installed Tools
 
 - Python3
 - pip3
@@ -10,6 +12,7 @@ Builds Docker image from latest jenkins:alpine Docker image and installs the fol
 - HashiCorp Packer v0.12.3
 - HashiCorp Terraform v0.8.8
 
+## Commands
 ```bash
 # create base image
 image="garystafford/jenkins"
@@ -31,7 +34,7 @@ sudo docker cp jenkins-dev:/var/jenkins_home /tmp/jenkins_home
 docker logs jenkins-dev
 docker exec -it jenkins-dev /bin/bash
 
-# Copy my aws keys to mounted volume
+# Copy my aws keys to locally mounted volume
 mkdir /tmp/jenkins_home/.ssh
 cp ~/.ssh/aws_rsa* /tmp/jenkins_home/.ssh
 ```
