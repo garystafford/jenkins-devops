@@ -1,6 +1,6 @@
-# Jenkins CI with DevOps tools
+# Jenkins Docker Image for DevOps CI/CD
 
-Builds Docker image from latest jenkins:alpine Docker image and installs common DevOps tools.
+Builds a Docker image from latest `jenkins:alpine` Docker image. Installs common DevOps tools.
 
 ## Installed Tools
 
