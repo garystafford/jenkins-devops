@@ -13,6 +13,7 @@ RUN set -x \
   && apk add git openntpd tzdata python3 \
   && python3 --version
 
+# set timezone to America/New_York
 RUN set -x \
   && ls /usr/share/zoneinfo \
   && cp /usr/share/zoneinfo/America/New_York /etc/localtime \
