@@ -15,24 +15,24 @@ Builds a Docker image from latest `jenkins:alpine` Docker image. Installs common
 ## Commands
 ```bash
 # create base image
-image="garystafford/jenkins"
-docker build -t ${image}:alpine .
+image="garystafford/jenkins-devops"
+docker build -t ${image}:latest .
 
-docker rm -f jenkins-dev
+docker rm -f jenkins-devops
 
 # run new container from image
 docker run -d \
-  --name jenkins-dev \
+  --name jenkins-devops \
   -p 8083:8080 \
   -p 50000:50000 \
   -v /tmp/jenkins_home:/var/jenkins_home \
-  garystafford/jenkins:alpine
+  garystafford/jenkins-devops:latest
 
 # 1x copy from container jenkins configuration to locally mounted volume
-sudo docker cp jenkins-dev:/var/jenkins_home /tmp/jenkins_home
+sudo docker cp jenkins-devops:/var/jenkins_home /tmp/jenkins_home
 
-docker logs jenkins-dev
-docker exec -it jenkins-dev /bin/bash
+docker logs jenkins-devops
+docker exec -it jenkins-devops /bin/bash
 
 # Copy my aws keys to locally mounted volume
 mkdir /tmp/jenkins_home/.ssh
