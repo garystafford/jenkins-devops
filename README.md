@@ -55,9 +55,17 @@ cp ~/.ssh/aws_rsa* /tmp/jenkins_home/.ssh
 
 ### Backup
 
-Backup process with Jenkins backup plugin. Full backups will be placed in the locally mounted directory.
+Backup process with Jenkins backup plugin. Backups will be placed in the locally mounted directory.
 
 ```bash
 mkdir -p /tmp/backup/hudson
 docker exec -it jenkins-devops mkdir -p /tmp/backup/hudson
+```
+
+### Troubleshooting
+
+Fix time skew with container time:
+
+```bash
+docker run -it --rm --privileged --pid=host debian nsenter -t 1 -m -u -n -i date -u $(date -u +%m%d%H%M%Y)
 ```
