@@ -4,14 +4,14 @@ Builds a Docker image from latest [`jenkins:alpine`](https://hub.docker.com/_/je
 
 ## Installed Tools
 
-- [AWS CLI](https://aws.amazon.com/cli/)
+- [AWS CLI](https://aws.amazon.com/cli/) v1.11.66
 - [git](https://git-scm.com/)
 - [HashiCorp Packer](https://www.packer.io/) v0.12.3
 - [HashiCorp Terraform](https://www.terraform.io/) v0.9.1
-- [jq](https://stedolan.github.io/jq/)
+- [jq](https://stedolan.github.io/jq/) v1.5
 - [OpenNTPD](http://www.openntpd.org/) (time sync)
 - [pip3](https://pip.pypa.io/en/stable/#)
-- [Python3](https://www.python.org/)
+- [Python3](https://www.python.org/) v3.5.2
 - [tzdata](https://www.iana.org/time-zones) (time sync)
 
 ## Commands
