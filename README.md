@@ -26,11 +26,11 @@ docker build -t ${image}:latest .
 ### Create Jenkins Container
 
 ```bash
-# make locally mounted directory for jenkins_home in container
-mkdir -p /tmp/jenkins_home/
-
 # delete previous containers
 docker rm -f jenkins-devops
+
+# create bind-mounted jenkins_home directory on host
+mkdir -p /tmp/jenkins_home/
 
 # run new container from image
 docker run -d \
@@ -41,19 +41,28 @@ docker run -d \
   -v /tmp/backup/hudson:/tmp/backup/hudson \
   garystafford/jenkins-devops:latest
 
+# check container log for issues
 docker logs jenkins-devops
 ```
 
-### AWS Keys
+### AWS SSL Keys
 
-Copy my AWS key pair to the locally mounted volume for use with Terraform.
+Copy any required AWS SSL key pairs to bind-mounted `jenkins_home` directory.
 
 ```bash
 mkdir -p /tmp/jenkins_home/.ssh
-cp ~/.ssh/aws_rsa* /tmp/jenkins_home/.ssh
+cp ~/.ssh/consul_aws_rsa* /tmp/jenkins_home/.ssh
 ```
 
-### Backup
+### AWS credentials
+
+Copy any required AWS credentials to bind-mounted `jenkins_home` directory
+
+```bash
+cp ~/credentials/jenkins_credentials.env /tmp/jenkins_home/
+```
+
+### Backup Directories
 
 Backup process with Jenkins backup plugin. Backups will be placed in the locally mounted directory.
 
