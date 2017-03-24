@@ -4,13 +4,15 @@ Builds a Docker image from latest [`jenkins:alpine`](https://hub.docker.com/_/je
 
 ## Installed Tools
 
-- Python3
-- pip3
-- git
-- OpenNTPD and tzdata (time sync)
-- AWS CLI
-- HashiCorp Packer v0.12.3
-- HashiCorp Terraform v0.8.8
+- [AWS CLI](https://aws.amazon.com/cli/)
+- [git](https://git-scm.com/)
+- [HashiCorp Packer](https://www.packer.io/) v0.12.3
+- [HashiCorp Terraform](https://www.terraform.io/) v0.9.1
+- [jq](https://stedolan.github.io/jq/)
+- [OpenNTPD](http://www.openntpd.org/) (time sync)
+- [pip3](https://pip.pypa.io/en/stable/#)
+- [Python3](https://www.python.org/)
+- [tzdata](https://www.iana.org/time-zones) (time sync)
 
 ## Commands
 
@@ -51,6 +53,11 @@ Copy any required AWS SSL key pairs to bind-mounted `jenkins_home` directory.
 
 ```bash
 mkdir -p /tmp/jenkins_home/.ssh
+
+# used for git SCM Sync plugin
+cp ~/.ssh/id_rsa /tmp/jenkins_home/.ssh
+
+# used for Consul cluster project
 cp ~/.ssh/consul_aws_rsa* /tmp/jenkins_home/.ssh
 ```
 
@@ -59,6 +66,7 @@ cp ~/.ssh/consul_aws_rsa* /tmp/jenkins_home/.ssh
 Copy any required AWS credentials to bind-mounted `jenkins_home` directory
 
 ```bash
+# used to connect to AWS with Packer/Terraform
 cp ~/credentials/jenkins_credentials.env /tmp/jenkins_home/
 ```
 
@@ -76,5 +84,11 @@ docker exec -it jenkins-devops mkdir -p /tmp/backup/hudson
 Fix time skew with container time:
 
 ```bash
-docker run -it --rm --privileged --pid=host debian nsenter -t 1 -m -u -n -i date -u $(date -u +%m%d%H%M%Y)
+docker run -it --rm --privileged \
+  --pid=host debian nsenter -t 1 -m -u -n -i \
+  date -u $(date -u +%m%d%H%M%Y)
 ```
+
+### References
+
+- [SCM Sync configuration plugin](https://wiki.jenkins-ci.org/display/JENKINS/SCM+Sync+configuration+plugin)

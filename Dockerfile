@@ -3,14 +3,14 @@ FROM jenkins:alpine
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
 LABEL refreshed_at 2017-03-09
 
-# switch to install via apk
+# switch to install packages via apk
 USER root
 
 # update and install tools including python3
 RUN set -x \
   && apk update \
   && apk upgrade \
-  && apk add git openntpd tzdata python3 \
+  && apk add git openntpd tzdata python3 jq \
   && python3 --version
 
 # set timezone to America/New_York
@@ -32,11 +32,12 @@ RUN set -x \
   && pip3 install --upgrade pip \
   && pip3 --version
 
-# install awscli
+# install AWS cli
 RUN set -x \
   && pip3 install awscli --upgrade \
   && exec bash
 
+# confirm by checking vesion
 RUN set -x \
   && aws --version
 
@@ -51,7 +52,7 @@ RUN set -x \
 
 # install terraform
 RUN set -x \
-  && tf_version="0.8.8" \
+  && tf_version="0.9.1" \
   && curl -O "https://releases.hashicorp.com/terraform/${tf_version}/terraform_${tf_version}_linux_amd64.zip" \
   && unzip terraform_${tf_version}_linux_amd64.zip \
   && rm -rf terraform_${tf_version}_linux_amd64.zip \
