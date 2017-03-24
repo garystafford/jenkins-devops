@@ -59,5 +59,12 @@ RUN set -x \
   && mv terraform /usr/bin \
   && terraform version
 
+
+# install plugins
+COPY plugins.txt /usr/share/jenkins/plugins.txt
+
+RUN set -x \
+  && /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
+
 # drop back to the regular jenkins user - good practice
 USER jenkins
