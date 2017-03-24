@@ -1,6 +1,6 @@
 # Jenkins DevOps Docker Image for DevOps CI/CD
 
-![Jenkins UI Preview](jenkins_preview.png)
+![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/jenkins_preview.png)
 
 Builds a Docker image from latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker image, and installs common DevOps tooling. This Jenkins containerized implementation is designed to be an ephemeral CI/CD tool; stood up, used, and torn down.
 
@@ -22,7 +22,7 @@ Based on latest packages as of 3/24/2017 build:
 
 Fully configured, the Jenkins DevOps Docker container has two bind-mounted directories on the host. The first, Jenkins' home directory, contains all configuration. The second directory is used for backups. Additionally, Jenkins backs up it's configuration, using the SCM Sync plugin, to GitHub.
 
-![Jenkins DevOps Docker Image Architecture](architecture.png)
+![Jenkins DevOps Docker Image Architecture](https://github.com/garystafford/jenkins-devops/blob/master/architecture.png)
 
 ## Creating Image
 
