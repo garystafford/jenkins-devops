@@ -1,10 +1,8 @@
 # Jenkins DevOps Docker Image for DevOps CI/CD
 
-![Jenkins UI Preview](jenkins.png)
+![Jenkins UI Preview](jenkins_preview.png)
 
-Builds a Docker image from latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker image. Installs common DevOps tooling. Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by default.
-
-![Jenkins DevOps Docker Image Architecture](architecture.png)
+Builds a Docker image from latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker image, and installs common DevOps tooling. This Jenkins containerized implementation is designed to be an ephemeral CI/CD tool; stood up, used, and torn down.
 
 ## Installed Tools
 
@@ -19,6 +17,12 @@ Based on latest packages as of 3/24/2017 build:
 - [pip3](https://pip.pypa.io/en/stable/#)
 - [Python3](https://www.python.org/) v3.5.2
 - [tzdata](https://www.iana.org/time-zones) (time sync)
+
+## Architecture
+
+Fully configured, the Jenkins DevOps Docker container has two bind-mounted directories on the host. The first, Jenkins' home directory, contains all configuration. The second directory is used for backups. Additionally, Jenkins backs up it's configuration, using the SCM Sync plugin, to GitHub.
+
+![Jenkins DevOps Docker Image Architecture](architecture.png)
 
 ## Creating Image
 
@@ -83,7 +87,9 @@ Check container log for issues
 docker logs jenkins-devops --follow
 ```
 
-### AWS SSL Keys
+Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by default.
+
+### Optional: AWS SSL Keys
 
 Copy any required AWS SSL key pairs to bind-mounted `jenkins_home` directory.
 
@@ -97,7 +103,7 @@ cp ~/.ssh/id_rsa /tmp/jenkins_home/.ssh
 cp ~/.ssh/consul_aws_rsa* /tmp/jenkins_home/.ssh
 ```
 
-### AWS Credentials
+### Optional: AWS Credentials
 
 Copy any required AWS credentials to bind-mounted `jenkins_home` directory
 
@@ -105,7 +111,6 @@ Copy any required AWS credentials to bind-mounted `jenkins_home` directory
 # used to connect to AWS with Packer/Terraform
 cp ~/credentials/jenkins_credentials.env /tmp/jenkins_home/
 ```
-
 
 ## Troubleshooting
 
