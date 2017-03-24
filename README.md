@@ -2,6 +2,8 @@
 
 Builds a Docker image from latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker image. Installs common DevOps tooling. Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by default.
 
+![Jenkins DevOps Docker Image Architecture](architecture.png)
+
 ## Installed Tools
 
 Based on latest packages as of 3/24/2017 build:
