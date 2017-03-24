@@ -1,5 +1,7 @@
 # Jenkins DevOps Docker Image for DevOps CI/CD
 
+![Jenkins UI Preview](jenkins.png)
+
 Builds a Docker image from latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker image. Installs common DevOps tooling. Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by default.
 
 ![Jenkins DevOps Docker Image Architecture](architecture.png)
@@ -103,6 +105,7 @@ Copy any required AWS credentials to bind-mounted `jenkins_home` directory
 # used to connect to AWS with Packer/Terraform
 cp ~/credentials/jenkins_credentials.env /tmp/jenkins_home/
 ```
+
 
 ## Troubleshooting
 
