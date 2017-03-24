@@ -16,7 +16,7 @@ Based on latest packages as of 3/24/2017 build:
 - [Python3](https://www.python.org/) v3.5.2
 - [tzdata](https://www.iana.org/time-zones) (time sync)
 
-## Creating Jenkins DevOps Docker Image
+## Creating Image
 
 ### Adding Jenkins Plugins
 
@@ -59,6 +59,8 @@ mkdir -p /tmp/backup/hudson
 # docker exec -it jenkins-devops mkdir -p /tmp/backup/hudson
 ```
 
+### Run the Container
+
 Run new container from `garystafford/jenkins-devops:latest` image
 
 ```bash
@@ -91,7 +93,7 @@ cp ~/.ssh/id_rsa /tmp/jenkins_home/.ssh
 cp ~/.ssh/consul_aws_rsa* /tmp/jenkins_home/.ssh
 ```
 
-### AWS credentials
+### AWS Credentials
 
 Copy any required AWS credentials to bind-mounted `jenkins_home` directory
 
@@ -100,7 +102,7 @@ Copy any required AWS credentials to bind-mounted `jenkins_home` directory
 cp ~/credentials/jenkins_credentials.env /tmp/jenkins_home/
 ```
 
-### Troubleshooting
+## Troubleshooting
 
 Fix time skew with container time:
 
@@ -110,7 +112,7 @@ docker run -it --rm --privileged \
   date -u $(date -u +%m%d%H%M%Y)
 ```
 
-### References
+## References
 
 - [Jenkins by Docker](https://store.docker.com/images/d55eda09-d7f0-47b0-8780-3407f2f9142c?tab=description)
 - [SCM Sync configuration plugin](https://wiki.jenkins-ci.org/display/JENKINS/SCM+Sync+configuration+plugin)
