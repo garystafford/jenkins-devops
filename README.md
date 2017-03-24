@@ -44,6 +44,8 @@ image="garystafford/jenkins-devops"
 docker build -t ${image}:latest .
 ```
 
+The latest `garystafford/jenkins-devops` image is available on [Docker Hub](https://hub.docker.com/r/garystafford/jenkins-devops/).
+
 ## Using the Docker Image
 
 ### Preliminary Steps
