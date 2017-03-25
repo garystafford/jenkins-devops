@@ -2,7 +2,7 @@
 
 ![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/jenkins_preview.png)
 
-Based on the latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker image. Builds a new Docker image and installs some common DevOps tooling, frequently used with Jenkins. This Jenkins containerized implementation is designed to be an ephemeral CI/CD DevOps tool - stood up, used, and torn down. Ideal for the Cloud.
+Based on the latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker image. Builds a new Docker image and installs some common DevOps tooling, frequently used with Jenkins. This Jenkins containerized implementation is designed to be an ephemeral CI/CD DevOps tool - stood up, used, and torn down, ideal for the Cloud.
 
 ## Installed Tools
 
