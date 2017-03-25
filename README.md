@@ -2,7 +2,7 @@
 
 ![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/jenkins_preview.png)
 
-Builds a Docker image from latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker image, and installs common DevOps tooling. This Jenkins containerized implementation is designed to be an ephemeral CI/CD tool - stood up, used, and torn down.
+Based on the latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker image. Builds a new Docker image and installs some common DevOps tooling, frequently used with Jenkins. This Jenkins containerized implementation is designed to be an ephemeral CI/CD DevOps tool - stood up, used, and torn down. Ideal for the Cloud.
 
 ## Installed Tools
 
@@ -20,7 +20,7 @@ Based on latest packages as of 3/24/2017 build:
 
 ## Architecture
 
-Fully configured, the Jenkins DevOps Docker container has two bind-mounted directories on the host. The first, Jenkins' home directory, contains all configuration. The second directory is used for backups. Additionally, Jenkins backs up it's configuration, using the SCM Sync plugin, to GitHub.
+Fully configured, the Jenkins DevOps Docker container uses two bind-mounted directories on the host. The first, the Jenkins' home directory, contains all required configuration. The second directory is used for backups, created using the Jenkins Backup plugin. Additionally, Jenkins can back up its configuration, using the SCM Sync plugin, to GitHub. Both these backup methods require additional configuration.
 
 ![Jenkins DevOps Docker Image Architecture](https://github.com/garystafford/jenkins-devops/blob/master/architecture.png)
 
@@ -62,7 +62,7 @@ Create bind-mounted `jenkins_home` directory on host
 mkdir -p /tmp/jenkins_home/
 ```
 
-Backup process with Jenkins backup plugin. Backups will be placed in the bind-mounted host directory.
+Backup process with Jenkins' [backup](https://wiki.jenkins-ci.org/display/JENKINS/Backup+Plugin) plugin. Backups are saved to the bind-mounted host directory.
 
 ```bash
 mkdir -p /tmp/backup/hudson
