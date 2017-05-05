@@ -78,8 +78,8 @@ docker run -d \
   --name jenkins-devops \
   -p 8083:8080 \
   -p 50000:50000 \
-  -v /tmp/jenkins_home:/var/jenkins_home \
-  -v /tmp/backup/hudson:/tmp/backup/hudson \
+  -v ~/jenkins_home:/var/jenkins_home \
+  -v ~/backup/hudson:/tmp/backup/hudson \
   garystafford/jenkins-devops:latest
 ```
 

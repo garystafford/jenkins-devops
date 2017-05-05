@@ -1,7 +1,7 @@
 FROM jenkins:alpine
 
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
-LABEL refreshed_at 2017-03-09
+LABEL refreshed_at 2017-05-04
 
 # switch to install packages via apk
 USER root
@@ -43,7 +43,7 @@ RUN set -x \
 
 # install packer
 RUN set -x \
-  && packer_version="0.12.3" \
+  && packer_version="1.0.0" \
   && curl -O "https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip" \
   && unzip packer_${packer_version}_linux_amd64.zip \
   && rm -rf packer_${packer_version}_linux_amd64.zip \
@@ -52,7 +52,7 @@ RUN set -x \
 
 # install terraform
 RUN set -x \
-  && tf_version="0.9.1" \
+  && tf_version="0.9.4" \
   && curl -O "https://releases.hashicorp.com/terraform/${tf_version}/terraform_${tf_version}_linux_amd64.zip" \
   && unzip terraform_${tf_version}_linux_amd64.zip \
   && rm -rf terraform_${tf_version}_linux_amd64.zip \
