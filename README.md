@@ -6,7 +6,7 @@ Based on the latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker 
 
 ## Installed Tools
 
-Based on latest packages as of 5/4/2017 build:
+Based on latest packages as of 5/15/2017 build:
 
 - [AWS CLI](https://aws.amazon.com/cli/) v1.11.85
 - [git](https://git-scm.com/) 2.13.0
