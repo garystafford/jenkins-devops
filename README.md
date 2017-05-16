@@ -6,12 +6,12 @@ Based on the latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker 
 
 ## Installed Tools
 
-Based on latest packages as of 3/24/2017 build:
+Based on latest packages as of 5/4/2017 build:
 
-- [AWS CLI](https://aws.amazon.com/cli/) v1.11.66
-- [git](https://git-scm.com/)
-- [HashiCorp Packer](https://www.packer.io/) v0.12.3
-- [HashiCorp Terraform](https://www.terraform.io/) v0.9.1
+- [AWS CLI](https://aws.amazon.com/cli/) v1.11.85
+- [git](https://git-scm.com/) 2.13.0
+- [HashiCorp Packer](https://www.packer.io/) v1.0.0
+- [HashiCorp Terraform](https://www.terraform.io/) v0.9.5
 - [jq](https://stedolan.github.io/jq/) v1.5
 - [OpenNTPD](http://www.openntpd.org/) (time sync)
 - [pip3](https://pip.pypa.io/en/stable/#)
@@ -33,6 +33,7 @@ The `Dockerfile` loads plugins from the `plugin.txt`. Currently, it installs two
 ```text
 thinBackup:1.9
 backup:1.6.1
+config-file-provider:2.15.7
 ```
 
 ### Create Image
@@ -59,14 +60,14 @@ docker rm -f jenkins-devops
 Create bind-mounted `jenkins_home` directory on host
 
 ```bash
-mkdir -p /tmp/jenkins_home/
+mkdir -p ~/jenkins_home/
 ```
 
 Backup process with Jenkins' [backup](https://wiki.jenkins-ci.org/display/JENKINS/Backup+Plugin) plugin. Backups are saved to the bind-mounted host directory.
 
 ```bash
-mkdir -p /tmp/backup/hudson
-# docker exec -it jenkins-devops mkdir -p /tmp/backup/hudson
+mkdir -p ~/backup/hudson
+# docker exec -it jenkins-devops mkdir -p ~/backup/hudson
 ```
 
 ### Run the Container
@@ -96,13 +97,13 @@ Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by 
 Copy any required AWS SSL key pairs to bind-mounted `jenkins_home` directory.
 
 ```bash
-mkdir -p /tmp/jenkins_home/.ssh
+mkdir -p ~/jenkins_home/.ssh
 
 # used for git SCM Sync plugin
-cp ~/.ssh/id_rsa /tmp/jenkins_home/.ssh
+cp ~/.ssh/id_rsa ~/jenkins_home/.ssh
 
 # used for Consul cluster project
-cp ~/.ssh/consul_aws_rsa* /tmp/jenkins_home/.ssh
+cp ~/.ssh/consul_aws_rsa* ~/jenkins_home/.ssh
 ```
 
 ### Optional: AWS Credentials
@@ -111,7 +112,7 @@ Copy any required AWS credentials to bind-mounted `jenkins_home` directory
 
 ```bash
 # used to connect to AWS with Packer/Terraform
-cp ~/credentials/jenkins_credentials.env /tmp/jenkins_home/
+cp ~/credentials/jenkins_credentials.env ~/jenkins_home/
 ```
 
 ## Troubleshooting

@@ -52,7 +52,7 @@ RUN set -x \
 
 # install terraform
 RUN set -x \
-  && tf_version="0.9.4" \
+  && tf_version="0.9.5" \
   && curl -O "https://releases.hashicorp.com/terraform/${tf_version}/terraform_${tf_version}_linux_amd64.zip" \
   && unzip terraform_${tf_version}_linux_amd64.zip \
   && rm -rf terraform_${tf_version}_linux_amd64.zip \
