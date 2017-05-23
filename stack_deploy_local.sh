@@ -5,7 +5,7 @@
 
 set -e
 
-mkdir -p /tmp/jenkins_home/
+mkdir -p /tmp/jenkins_home/.ssh/
 mkdir -p /tmp/backup/hudson/
 
 # ensure latest image is pulled...

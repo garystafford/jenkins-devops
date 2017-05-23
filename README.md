@@ -66,9 +66,9 @@ Check logs
 docker logs $(docker ps | grep jenkins-devops | awk '{print $1}')
 ```
 
-This script also creates local directories `~/jenkins_home/` and `~/backup/hudson`.  
-All relevant Jenkins files are stored in bind-mounted `~/jenkins_home/` directory.  
-Backups are saved to the bind-mounted `~/backup/hudson` host directory, using the Jenkins' [backup](https://wiki.jenkins-ci.org/display/JENKINS/Backup+Plugin) plugin.
+This script also creates local directories `/tmp/jenkins_home/` and `/tmp/backup/hudson`.  
+All relevant Jenkins files are stored in bind-mounted `/tmp/jenkins_home/` directory.  
+Backups are saved to the bind-mounted `/tmp/backup/hudson` host directory, using the Jenkins' [backup](https://wiki.jenkins-ci.org/display/JENKINS/Backup+Plugin) plugin.
 
 Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by default.
 
@@ -77,13 +77,13 @@ Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by 
 Copy any required AWS SSL key pairs to bind-mounted `jenkins_home` directory.
 
 ```bash
-mkdir -p ~/jenkins_home/.ssh
+mkdir -p /tmp/jenkins_home/.ssh
 
 # used for git SCM Sync plugin
-cp ~/.ssh/id_rsa ~/jenkins_home/.ssh
+cp ~/.ssh/id_rsa /tmp/jenkins_home/.ssh/id_rsa
 
 # used for Consul cluster project
-cp ~/.ssh/consul_aws_rsa* ~/jenkins_home/.ssh
+cp ~/.ssh/consul_aws_rsa* /tmp/jenkins_home/.ssh
 ```
 
 ## Optional: AWS Credentials
@@ -92,7 +92,7 @@ Copy any required AWS credentials to bind-mounted `jenkins_home` directory
 
 ```bash
 # used to connect to AWS with Packer/Terraform
-cp ~/credentials/jenkins_credentials.env ~/jenkins_home/
+cp ~/credentials/jenkins_credentials.env /tmp/jenkins_home/
 ```
 
 ## Troubleshooting
