@@ -1,0 +1,18 @@
+# Deploy Jenkins DevOps container locally
+
+version: '3.0'
+
+services:
+  jenkins-devops:
+    image: garystafford/jenkins-devops:latest
+    hostname: jenkins
+    ports:
+    - "8083:8080/tcp"
+    - "50000:50000/tcp"
+    networks:
+    - demo_overlay_net
+    volumes:
+    - /tmp/jenkins_home:/var/jenkins_home
+    - /tmp/backup/hudson:/tmp/backup/hudson
+networks:
+  demo_overlay_net:

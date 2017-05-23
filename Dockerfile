@@ -1,7 +1,7 @@
 FROM jenkins:alpine
 
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
-LABEL refreshed_at 2017-05-04
+LABEL refreshed_at 2017-05-23
 
 # switch to install packages via apk
 USER root
@@ -59,10 +59,8 @@ RUN set -x \
   && mv terraform /usr/bin \
   && terraform version
 
-
 # install plugins
 COPY plugins.txt /usr/share/jenkins/plugins.txt
-
 RUN set -x \
   && /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
 

@@ -8,7 +8,7 @@ This Jenkins containerized implementation is designed to be an ephemeral CI/CD D
 
 ## Installed Tools
 
-Based on latest packages as of 5/15/2017 build:
+Based on latest packages as of 5/22/2017 build:
 
 - [AWS CLI](https://aws.amazon.com/cli/) v1.11.85
 - [Git](https://git-scm.com/) 2.13.0
@@ -26,75 +26,53 @@ Fully configured, the Jenkins DevOps Docker container uses two bind-mounted dire
 
 ![Jenkins DevOps Docker Image Architecture](https://github.com/garystafford/jenkins-devops/blob/master/architecture.png)
 
-## Creating Image
+## Quick Start
+Don't want to read the instructions?
+```bash
+sh ./stack_deploy_local.sh
+```
+Jenkins will be running on [`http://localhost:8083`](http://localhost:8083).
 
-### Adding Jenkins Plugins
+
+## Optional: Adding Jenkins Plugins
 
 The `Dockerfile` loads plugins from the `plugin.txt`. Currently, it installs two backup plugins. You can add more plugins to this file, before building Docker image. See the Jenkins [Plugins Index](https://plugins.jenkins.io/) for more.
 
 ```text
 thinBackup:1.9
 backup:1.6.1
-config-file-provider:2.15.7
+scm-sync-configuration:0.0.10
 ```
 
-### Create Image
-
-Create the new `garystafford/jenkins-devops:latest` image from the Dockerfile.
-
-```bash
-image="garystafford/jenkins-devops"
-docker build -t ${image}:latest .
-```
+## Optional: Create Docker Image
 
 The latest `garystafford/jenkins-devops` image is available on [Docker Hub](https://hub.docker.com/r/garystafford/jenkins-devops/).
 
-## Using the Docker Image
-
-### Preliminary Steps
-
-Delete previous Jenkins container
+Optionally, to create a new image from the Dockerfile
 
 ```bash
-docker rm -f jenkins-devops
+docker build -t garystafford/jenkins-devops:latest .
 ```
+## Run the Container
 
-Create bind-mounted `jenkins_home` directory on host
+Create a new container from `garystafford/jenkins-devops:latest` image
 
 ```bash
-mkdir -p ~/jenkins_home/
+sh ./stack_deploy_local.sh
 ```
 
-Backup process with Jenkins' [backup](https://wiki.jenkins-ci.org/display/JENKINS/Backup+Plugin) plugin. Backups are saved to the bind-mounted host directory.
-
+Check logs
 ```bash
-mkdir -p ~/backup/hudson
-# docker exec -it jenkins-devops mkdir -p ~/backup/hudson
+docker logs $(docker ps | grep jenkins-devops | awk '{print $1}')
 ```
 
-### Run the Container
-
-Run new container from `garystafford/jenkins-devops:latest` image
-
-```bash
-docker run -d \
-  --name jenkins-devops \
-  -p 8083:8080 \
-  -p 50000:50000 \
-  -v ~/jenkins_home:/var/jenkins_home \
-  -v ~/backup/hudson:/tmp/backup/hudson \
-  garystafford/jenkins-devops:latest
-```
-
-Check container log for issues
-
-```bash
-docker logs jenkins-devops --follow
-```
+This script also creates local directories `~/jenkins_home/` and `~/backup/hudson`.  
+All relevant Jenkins files are stored in bind-mounted `~/jenkins_home/` directory.  
+Backups are saved to the bind-mounted `~/backup/hudson` host directory, using the Jenkins' [backup](https://wiki.jenkins-ci.org/display/JENKINS/Backup+Plugin) plugin.
 
 Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by default.
 
-### Optional: AWS SSL Keys
+## Optional: AWS SSL Keys
 
 Copy any required AWS SSL key pairs to bind-mounted `jenkins_home` directory.
 
@@ -108,7 +86,7 @@ cp ~/.ssh/id_rsa ~/jenkins_home/.ssh
 cp ~/.ssh/consul_aws_rsa* ~/jenkins_home/.ssh
 ```
 
-### Optional: AWS Credentials
+## Optional: AWS Credentials
 
 Copy any required AWS credentials to bind-mounted `jenkins_home` directory
 
