@@ -28,7 +28,7 @@ RUN set -x \
    stable" \
   && apt-get update \
   && apt-get -y upgrade \
-  && apt-get install -y docker-ce
+  && apt-get install -y docker-ce \
   && docker --version
 
 # set timezone to America/New_York
