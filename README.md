@@ -8,15 +8,16 @@ This Jenkins containerized implementation is designed to be an ephemeral CI/CD D
 
 ## Installed Tools
 
-Based on latest packages as of 5/22/2017 build:
+Based on latest packages as of 5/24/2017 build:
 
-- [AWS CLI](https://aws.amazon.com/cli/) v1.11.85
-- [Git](https://git-scm.com/) 2.13.0
+- [AWS CLI](https://aws.amazon.com/cli/) v1.11.91
+- [Git](https://git-scm.com/) 2.11.2
+- [Docker](https://docker.com/) 1.12.6
 - [HashiCorp Packer](https://www.packer.io/) v1.0.0
 - [HashiCorp Terraform](https://www.terraform.io/) v0.9.5
 - [jq](https://stedolan.github.io/jq/) v1.5
 - [OpenNTPD](http://www.openntpd.org/) (time sync)
-- [pip3](https://pip.pypa.io/en/stable/#)
+- [pip3](https://pip.pypa.io/en/stable/#) v9.0.1
 - [Python3](https://www.python.org/) v3.5.2
 - [tzdata](https://www.iana.org/time-zones) (time sync)
 
@@ -41,6 +42,7 @@ The `Dockerfile` loads plugins from the `plugin.txt`. Currently, it installs two
 ```text
 thinBackup:1.9
 backup:1.6.1
+scm-sync-configuration:0.0.10
 ```
 
 ## Optional: Create Docker Image
@@ -65,11 +67,31 @@ Check logs
 docker logs $(docker ps | grep jenkins-devops | awk '{print $1}')
 ```
 
-This script also creates local directories `/tmp/jenkins_home/` and `/tmp/backup/hudson`.  
+This script also creates local directories `/tmp/jenkins_home/.ssh/` and `/tmp/jenkins_home/backups/`.  
 All relevant Jenkins files are stored in bind-mounted `/tmp/jenkins_home/` directory.  
-Backups are saved to the bind-mounted `/tmp/backup/hudson` host directory, using the Jenkins' [backup](https://wiki.jenkins-ci.org/display/JENKINS/Backup+Plugin) plugin.
+Backups are saved to the bind-mounted `/tmp/jenkins_home/backups/` host directory, using the Jenkins' [backup](https://wiki.jenkins-ci.org/display/JENKINS/Backup+Plugin) plugin.
 
 Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by default.
+
+```bash
+JENKINS_CONTAINER=$(docker ps | grep jenkins-devops | awk '{print $1}')
+docker exec -it ${JENKINS_CONTAINER} \
+  mkdir /var/jenkins_home/backup/
+```
+
+## SCM
+
+Install `scm-sync-configuration:0.0.10` plugin
+
+Set git/GitHub repo path to your config repo: `git@github.com:<your_username>/jenkins-config.git`
+
+```bash
+docker exec -it $(docker ps | grep jenkins-devops | awk '{print $1}') \
+  git config --global user.email "<your@email.com>"
+
+docker exec -it $(docker ps | grep jenkins-devops | awk '{print $1}') \
+  git config --global user.name "<your_username>"
+```
 
 ## Optional: AWS SSL Keys
 

@@ -8,10 +8,11 @@ USER root
 
 # update and install tools including python3
 RUN set -x \
+  echo "http://dl-6.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
   && apk update \
   && apk upgrade \
-  && apk add git openntpd tzdata python3 jq \
-  && python3 --version
+  && apk add openrc git openntpd tzdata python3 jq docker \
+  && python3 --version; docker --version; git --version; jq --version
 
 # set timezone to America/New_York
 RUN set -x \

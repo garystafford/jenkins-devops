@@ -5,16 +5,31 @@
 
 set -e
 
-mkdir -p /tmp/jenkins_home/.ssh/
-mkdir -p /tmp/backup/hudson/
+# Make local bind-mounted directories
+mkdir -p /tmp/jenkins_home/.ssh/ || echo "Directory already exists..."
+mkdir -p /tmp/jenkins_home/backups/ || echo "Directory already exists..."
 
 # ensure latest image is pulled...
 docker pull garystafford/jenkins-devops:latest
 
+# create Jenkins container
 docker-compose \
   -f docker-compose-local.yml \
-  -p voterstack up \
+  -p demostack up \
   --force-recreate -d
+
+# COnfigure Jenkins container
+JENKINS_CONTAINER=$(docker ps | grep jenkins-devops | awk '{print $1}')
+GIT_EMAIL="jenkins@jenkins.com"
+GIT_USER="jenkins"
+
+docker exec -it ${JENKINS_CONTAINER} \
+  mkdir /var/jenkins_home/backup/ || echo "Directory already exists..."
+docker exec -it ${JENKINS_CONTAINER} \
+  git config --global user.email ${GIT_EMAIL}
+docker exec -it ${JENKINS_CONTAINER} \
+  git config --global user.name ${GIT_USER}
+
 
 docker rm $(docker ps -a -f status=exited -q) || echo "No containers to delete..."
 docker image prune -f # clean up danglers...
