@@ -73,24 +73,18 @@ Backups are saved to the bind-mounted `/tmp/jenkins_home/backups/` host director
 
 Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by default.
 
-```bash
-JENKINS_CONTAINER=$(docker ps | grep jenkins-devops | awk '{print $1}')
-docker exec -it ${JENKINS_CONTAINER} \
-  mkdir /var/jenkins_home/backup/
-```
-
 ## SCM
 
 Install `scm-sync-configuration:0.0.10` plugin
 
-Set git/GitHub repo path to your config repo: `git@github.com:<your_username>/jenkins-config.git`
+Set git/GitHub repo path to your config repo, for example: `git@github.com:<your_username>/jenkins-config.git`
 
 ```bash
 docker exec -it $(docker ps | grep jenkins-devops | awk '{print $1}') \
-  git config --global user.email "<your@email.com>"
+  bash -c 'git config --global user.email "<your@email.com>"'
 
 docker exec -it $(docker ps | grep jenkins-devops | awk '{print $1}') \
-  git config --global user.name "<your_username>"
+  bash -c 'git config --global user.name "<your_username>"'
 ```
 
 ## Optional: AWS SSL Keys

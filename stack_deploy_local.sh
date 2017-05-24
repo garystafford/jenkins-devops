@@ -24,11 +24,14 @@ GIT_EMAIL="jenkins@jenkins.com"
 GIT_USER="jenkins"
 
 docker exec -it ${JENKINS_CONTAINER} \
-  mkdir /var/jenkins_home/backup/ || echo "Directory already exists..."
+  bash -c "mkdir /var/jenkins_home/backup/" || echo "Directory already exists..."
 docker exec -it ${JENKINS_CONTAINER} \
-  git config --global user.email ${GIT_EMAIL}
+  bash -c "git config --global user.email ${GIT_EMAIL}"
 docker exec -it ${JENKINS_CONTAINER} \
-  git config --global user.name ${GIT_USER}
+  bash -c "git config --global user.name ${GIT_USER}"
+docker exec -it ${JENKINS_CONTAINER} \
+  bash -c "git clone git@github.com:garystafford/jenkins-config.git scm-sync-configuration/checkoutConfiguration" \
+  || echo "An error occurred?!"
 
 
 docker rm $(docker ps -a -f status=exited -q) || echo "No containers to delete..."

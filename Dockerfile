@@ -1,7 +1,7 @@
 FROM jenkins:alpine
 
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
-LABEL refreshed_at 2017-05-23
+LABEL refreshed_at 2017-05-24
 
 # switch to install packages via apk
 USER root
@@ -13,6 +13,10 @@ RUN set -x \
   && apk upgrade \
   && apk add openrc git openntpd tzdata python3 jq docker \
   && python3 --version; docker --version; git --version; jq --version
+
+RUN set -x \
+  && rc-update add docker boot || echo "Already starting/started..." \
+  && service docker start  || echo "Already starting/started..."
 
 # set timezone to America/New_York
 RUN set -x \
