@@ -2,7 +2,7 @@
 
 ![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/jenkins_preview.png)
 
-Based on the latest [`jenkins:alpine`](https://hub.docker.com/_/jenkins) Docker image. Builds a new Docker image and installs common DevOps tools and Jenkins plugins, frequently used with Jenkins, including Git, AWS CLI, Terraform, Packer, Python, and jq.
+Based on the latest [`jenkins:latest`](https://hub.docker.com/_/jenkins) Docker image. Builds a new Docker image and installs common DevOps tools and Jenkins plugins, frequently used with Jenkins, including Git, AWS CLI, Terraform, Packer, Python, and jq.
 
 This Jenkins containerized implementation is designed to be an ephemeral CI/CD DevOps tool - stood up, used, and torn down, ideal for the Cloud.
 
@@ -11,14 +11,14 @@ This Jenkins containerized implementation is designed to be an ephemeral CI/CD D
 Based on latest packages as of 5/24/2017 build:
 
 - [AWS CLI](https://aws.amazon.com/cli/) v1.11.91
-- [Git](https://git-scm.com/) 2.11.2
-- [Docker](https://docker.com/) 1.12.6
+- [Git](https://git-scm.com/) 2.1.4
+- [Docker](https://docker.com/) docker-ce (17.03.1~ce-0~debian-jessie)
 - [HashiCorp Packer](https://www.packer.io/) v1.0.0
 - [HashiCorp Terraform](https://www.terraform.io/) v0.9.5
-- [jq](https://stedolan.github.io/jq/) v1.5
+- [jq](https://stedolan.github.io/jq/) v1.4.1
 - [OpenNTPD](http://www.openntpd.org/) (time sync)
-- [pip3](https://pip.pypa.io/en/stable/#) v9.0.1
-- [Python3](https://www.python.org/) v3.5.2
+- [pip3](https://pip.pypa.io/en/stable/#) v1.5.6
+- [Python3](https://www.python.org/) v3.4.2
 - [tzdata](https://www.iana.org/time-zones) (time sync)
 
 ## Architecture

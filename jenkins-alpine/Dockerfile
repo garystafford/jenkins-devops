@@ -1,40 +1,37 @@
-FROM jenkins:latest
+FROM jenkins:alpine
 
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
 LABEL refreshed_at 2017-05-24
 
-# switch to install packages via apt
+# switch to install packages via apk
 USER root
-
-RUN set -x \
-  && apt-get update \
-  && apt-get -y upgrade \
-  && apt-get -y install openrc git openntpd tzdata python3 python3-pip jq lsb-release software-properties-common \
-  && python3 --version; docker --version; git --version; jq --version; pip3 --version
 
 # update and install tools including python3
 RUN set -x \
-  && apt-get install -y \
-     apt-transport-https \
-     ca-certificates \
-     curl \
-     gnupg2 \
-  && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
-  && add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/debian \
-   $(lsb_release -cs) \
-   stable" \
-  && apt-get update \
-  && apt-get -y upgrade \
-  && apt-get install -y docker-ce
-  && docker --version
+  echo "http://dl-6.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+  && apk update \
+  && apk upgrade \
+  && apk add openrc git openntpd tzdata python3 jq \
+  && python3 --version; docker --version; git --version; jq --version
 
 # set timezone to America/New_York
 RUN set -x \
   && ls /usr/share/zoneinfo \
   && cp /usr/share/zoneinfo/America/New_York /etc/localtime \
   && echo "America/New_York" >  /etc/timezone \
-  && date
+  && date \
+  && apk del tzdata
+
+# install pip
+RUN set -x \
+  && curl -O https://bootstrap.pypa.io/get-pip.py \
+  && python3 get-pip.py --user \
+  && exec bash
+
+# upgrade pip
+RUN set -x \
+  && pip3 install --upgrade pip \
+  && pip3 --version
 
 # install AWS cli
 RUN set -x \
