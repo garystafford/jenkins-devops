@@ -6,15 +6,17 @@ LABEL refreshed_at 2017-05-24
 # switch to install packages via apt
 USER root
 
+# update and install common packages
 RUN set -x \
   && apt-get update \
   && apt-get -y upgrade \
-  && apt-get -y install openrc git openntpd tzdata python3 python3-pip jq lsb-release software-properties-common \
+  && apt-get -y install openrc git openntpd tzdata python3 python3-pip jq \
   && python3 --version; docker --version; git --version; jq --version; pip3 --version
 
-# update and install tools including python3
+# update and install docker-ce and associated packages
 RUN set -x \
   && apt-get install -y \
+     lsb-release software-properties-common \
      apt-transport-https \
      ca-certificates \
      curl \
