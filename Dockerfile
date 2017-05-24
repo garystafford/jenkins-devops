@@ -31,6 +31,8 @@ RUN set -x \
   && apt-get install -y docker-ce \
   && docker --version
 
+RUN usermod -a -G staff,docker jenkins
+
 # set timezone to America/New_York
 RUN set -x \
   && ls /usr/share/zoneinfo \
