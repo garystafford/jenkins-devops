@@ -2,7 +2,7 @@
 
 ![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/jenkins_preview.png)
 
-Based on the latest [`jenkins:latest`](https://hub.docker.com/_/jenkins) Docker image. Builds a new Docker image and installs common DevOps tools and Jenkins plugins, frequently used with Jenkins, including Git, AWS CLI, Terraform, Packer, Python, and jq.
+Based on the latest [`jenkins:latest`](https://hub.docker.com/_/jenkins) Docker image. Builds a new Docker image and installs common DevOps tools and Jenkins plugins, frequently used with Jenkins, including Git, AWS CLI, Terraform, Packer, Python, Docker, and jq.
 
 This Jenkins containerized implementation is designed to be an ephemeral CI/CD DevOps tool - stood up, used, and torn down, ideal for the Cloud.
 
