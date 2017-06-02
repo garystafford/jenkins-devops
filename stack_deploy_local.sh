@@ -10,7 +10,7 @@ mkdir -p /tmp/jenkins_home/.ssh/ || echo "Directory already exists..."
 mkdir -p /tmp/jenkins_home/backups/ || echo "Directory already exists..."
 
 # ensure latest image is pulled...
-# docker pull garystafford/jenkins-devops:latest
+docker pull garystafford/jenkins-devops:latest
 
 # create Jenkins container
 docker-compose \

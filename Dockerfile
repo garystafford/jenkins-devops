@@ -1,7 +1,7 @@
 FROM jenkins:latest
 
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
-LABEL refreshed_at 2017-05-24
+LABEL refreshed_at 2017-06-02
 
 # switch to install packages via apt
 USER root
@@ -60,7 +60,7 @@ RUN set -x \
 
 # install terraform
 RUN set -x \
-  && tf_version="0.9.5" \
+  && tf_version="0.9.6" \
   && curl -O "https://releases.hashicorp.com/terraform/${tf_version}/terraform_${tf_version}_linux_amd64.zip" \
   && unzip terraform_${tf_version}_linux_amd64.zip \
   && rm -rf terraform_${tf_version}_linux_amd64.zip \
