@@ -42,7 +42,6 @@ The `Dockerfile` loads plugins from the `plugin.txt`. Currently, it installs two
 ```text
 thinBackup:1.9
 backup:1.6.1
-scm-sync-configuration:0.0.10
 ```
 
 ## Optional: Create Docker Image

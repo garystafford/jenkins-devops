@@ -7,7 +7,7 @@ set -e
 
 # Make local bind-mounted directories
 mkdir -p /tmp/jenkins_home/.ssh/ || echo "Directory already exists..."
-mkdir -p /tmp/jenkins_home/backups/ || echo "Directory already exists..."
+mkdir -p /tmp/jenkins_home/backup/ || echo "Directory already exists..."
 
 # ensure latest image is pulled...
 docker pull garystafford/jenkins-devops:latest
@@ -38,10 +38,12 @@ docker rm $(docker ps -a -f status=exited -q) || echo "No containers to delete..
 docker image prune -f # clean up danglers...
 
 echo "Letting services start-up..."
-sleep 10
+sleep 20
 
 docker logs $(docker ps | grep jenkins-devops | awk '{print $1}')
 
 echo "Script completed..."
 
 echo "Jenkins available at: http://localhost:8083"
+ADMIN_PASSWORD=$(cat /tmp/jenkins_home/secrets/initialAdminPassword)
+echo "Unlock Jenkins: ${ADMIN_PASSWORD}"
