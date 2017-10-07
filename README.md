@@ -98,7 +98,7 @@ Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by 
 
 ## SCM
 
-Install `scm-sync-configuration:0.0.10` plugin
+Install the SCM Sync Configuration Plugin (`scm-sync-configuration:0.0.10`)
 
 Set git/GitHub repo path to your config repo, for example: `git@github.com:<your_username>/jenkins-config.git`
 
@@ -156,6 +156,9 @@ docker run -d --name jenkins-temp -p 8083:8080/tcp -p 50000:50000/tcp garystaffo
 
 # push
 docker push garystafford/jenkins-devops:2017.10.07
+
+# clean up local bind-mounted directory
+rm -rf /tmp/jenkins_home
 ```
 
 ## References

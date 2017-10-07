@@ -33,13 +33,11 @@ docker exec -it ${JENKINS_CONTAINER} \
 #   bash -c "git clone git@github.com:garystafford/jenkins-config.git scm-sync-configuration/checkoutConfiguration" \
 #   || echo "An error occurred?!"
 
-
-docker rm $(docker ps -a -f status=exited -q) || echo "No containers to delete..."
-docker image prune -f # clean up danglers...
+# docker rm $(docker ps -a -f status=exited -q) || echo "No containers to delete..."
+# docker image prune -f # clean up danglers...
 
 echo "Letting services start-up..."
 sleep 20
-
 docker logs $(docker ps | grep jenkins-devops | awk '{print $1}')
 
 echo "Script completed..."
