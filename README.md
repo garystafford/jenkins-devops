@@ -8,13 +8,13 @@ This Jenkins containerized implementation is designed to be an ephemeral CI/CD D
 
 ## Installed Tools
 
-Based on latest packages as of 6/2/2017 build:
+Based on latest packages as of 10/07/2017 build:
 
 - [AWS CLI](https://aws.amazon.com/cli/) v1.11.91
 - [Git](https://git-scm.com/) 2.1.4
 - [Docker](https://docker.com/) Docker version 17.06.0-ce, build 02c1d87
-- [HashiCorp Packer](https://www.packer.io/) v1.0.2
-- [HashiCorp Terraform](https://www.terraform.io/) v0.9.11
+- [HashiCorp Packer](https://www.packer.io/) v1.1.0
+- [HashiCorp Terraform](https://www.terraform.io/) v0.10.7
 - [jq](https://stedolan.github.io/jq/) v1.4.1
 - [OpenNTPD](http://www.openntpd.org/) (time sync)
 - [pip3](https://pip.pypa.io/en/stable/#) v1.5.6
