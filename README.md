@@ -1,8 +1,10 @@
 # Jenkins DevOps Toolkit
 
-![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/jenkins_preview.png)
-
 The project's goal is to provide DevOps Engineers with a light-weight, ready-made, easily-modifiable DevOps toolkit in a Docker container. The container includes the latest copies of Jenkins, Jenkins plugins, and the most common DevOps tools frequently used with Jenkins. These DevOps tools include Git, AWS CLI, Terraform, Packer, Python, Docker, Docker Compose, cURL, and jq. The container is designed to be a short-lived, stood up, used for CI/CD, and torn down, and is ideal for the Cloud.
+
+![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/pics/jenkins_startup.png)
+
+![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/pics/jenkins_preview2.png)
 
 The `Jenkins DevOps Toolkit` image is based on the latest [`jenkins/jenkins:latest`](https://hub.docker.com/r/jenkins/jenkins/) Docker image. The Jenkins Docker image is based on [Debian GNU/Linux 9.1 (stretch)](https://wiki.debian.org/DebianStretch).
 
@@ -45,7 +47,7 @@ Terraform v0.10.7
 
 Fully configured, the Jenkins DevOps Docker container uses two bind-mounted directories on the host. The first, the Jenkins' home directory, contains all required configuration. The second directory is used for backups, created using the Jenkins Backup plugin. Additionally, Jenkins can back up its configuration, using the SCM Sync plugin, to GitHub. Both these backup methods require additional configuration.
 
-![Jenkins DevOps Docker Image Architecture](https://github.com/garystafford/jenkins-devops/blob/master/architecture.png)
+![Jenkins DevOps Docker Image Architecture](https://github.com/garystafford/jenkins-devops/blob/master/pics/architecture.png)
 
 ## Quick Start
 
