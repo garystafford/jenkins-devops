@@ -1,10 +1,10 @@
 # Deploy Jenkins DevOps container locally
 
-version: '3.0'
+version: '3.2'
 
 services:
   jenkins-devops:
-    image: garystafford/jenkins-devops:latest
+    image: garystafford/jenkins-devops:2017.10.07
     hostname: jenkins
     ports:
     - "8083:8080/tcp"

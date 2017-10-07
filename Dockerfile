@@ -1,7 +1,7 @@
-FROM jenkins:latest
+FROM jenkins/jenkins:latest
 
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
-LABEL refreshed_at 2017-10-07
+ENV REFRESHED_AT 2017-10-07
 
 # switch to install packages via apt
 USER root
@@ -10,17 +10,13 @@ USER root
 RUN set -x \
   && apt-get update \
   && apt-get -y upgrade \
-  && apt-get -y install openrc git openntpd tzdata python3 python3-pip jq \
-  && python3 --version; docker --version; git --version; jq --version; pip3 --version
+  && apt-get -y install openrc git openntpd tzdata python3 python3-pip jq
 
-# update and install docker-ce and associated packages
+# update and install Docker CE and associated packages
 RUN set -x \
   && apt-get install -y \
      lsb-release software-properties-common \
-     apt-transport-https \
-     ca-certificates \
-     curl \
-     gnupg2 \
+     apt-transport-https ca-certificates curl gnupg2 \
   && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
   && add-apt-repository \
     "deb [arch=amd64] https://download.docker.com/linux/debian \
@@ -28,10 +24,17 @@ RUN set -x \
     stable" \
   && apt-get update \
   && apt-get -y upgrade \
-  && apt-get install -y docker-ce \
-  && docker --version
+  && apt-get install -y docker-ce
 
-RUN usermod -a -G staff,docker jenkins
+RUN set -x \
+  && usermod -aG staff,docker jenkins \
+  && exec bash
+
+# install Docker Compose
+RUN set -x \
+  && curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` > docker-compose \
+  && cp docker-compose /usr/local/bin/docker-compose \
+  && chmod +x /usr/local/bin/docker-compose
 
 # set timezone to America/New_York
 RUN set -x \
@@ -40,37 +43,38 @@ RUN set -x \
   && echo "America/New_York" >  /etc/timezone \
   && date
 
-# install AWS cli
+# install AWS CLI
 RUN set -x \
   && pip3 install awscli --upgrade \
   && exec bash
 
-# confirm by checking vesion
-RUN set -x \
-  && aws --version
-
-# install packer
+# install HasiCorp Packer
 RUN set -x \
   && packer_version="1.1.0" \
   && curl -O "https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip" \
   && unzip packer_${packer_version}_linux_amd64.zip \
   && rm -rf packer_${packer_version}_linux_amd64.zip \
-  && mv packer /usr/bin \
-  && packer version
+  && mv packer /usr/bin
 
-# install terraform
+# install HasiCorp Terraform
 RUN set -x \
   && tf_version="0.10.7" \
   && curl -O "https://releases.hashicorp.com/terraform/${tf_version}/terraform_${tf_version}_linux_amd64.zip" \
   && unzip terraform_${tf_version}_linux_amd64.zip \
   && rm -rf terraform_${tf_version}_linux_amd64.zip \
-  && mv terraform /usr/bin \
-  && terraform version
+  && mv terraform /usr/bin
 
-# install plugins
+# install Jenkins plugins
 COPY plugins.txt /usr/share/jenkins/plugins.txt
 RUN set -x \
   && /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
+
+# list installed software versions
+RUN echo ''; echo '*** INSTALLED SOFTWARE VERSIONS ***';echo ''; \
+  cat /etc/*release; python3 --version; \
+  docker --version; docker-compose version; \
+  git --version; jq --version; pip3 --version; aws --version; \
+  packer version; terraform version; echo '';
 
 # drop back to the regular jenkins user - good practice
 USER jenkins

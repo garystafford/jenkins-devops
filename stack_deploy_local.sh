@@ -10,7 +10,7 @@ mkdir -p /tmp/jenkins_home/.ssh/ || echo "Directory already exists..."
 mkdir -p /tmp/jenkins_home/backup/ || echo "Directory already exists..."
 
 # ensure latest image is pulled...
-docker pull garystafford/jenkins-devops:latest
+docker pull garystafford/jenkins-devops:2017.10.07
 
 # create Jenkins container
 docker-compose \
@@ -18,7 +18,7 @@ docker-compose \
   -p demostack up \
   --force-recreate -d
 
-# COnfigure Jenkins container
+# Configure Jenkins container
 JENKINS_CONTAINER=$(docker ps | grep jenkins-devops | awk '{print $1}')
 GIT_EMAIL="jenkins@jenkins.com"
 GIT_USER="jenkins"
