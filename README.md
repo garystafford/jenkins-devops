@@ -161,8 +161,9 @@ docker run -d --name jenkins-temp -p 8083:8080/tcp -p 50000:50000/tcp garystaffo
 # push
 docker push garystafford/jenkins-devops:2017.10.07
 
-# clean up local bind-mounted directory
+# clean up container and local bind-mounted directory
 rm -rf /tmp/jenkins_home
+docker rm -f devopstack_jenkins-devops_1
 ```
 
 ## References
