@@ -1,7 +1,7 @@
 FROM jenkins/jenkins:latest
 
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
-ENV REFRESHED_AT 2017-10-07
+ENV REFRESHED_AT 2017-10-08
 
 # switch to install packages via apt
 USER root
@@ -36,13 +36,6 @@ RUN set -x \
   && cp docker-compose /usr/local/bin/docker-compose \
   && chmod +x /usr/local/bin/docker-compose
 
-# set timezone to America/New_York
-RUN set -x \
-  && ls /usr/share/zoneinfo \
-  && cp /usr/share/zoneinfo/America/New_York /etc/localtime \
-  && echo "America/New_York" >  /etc/timezone \
-  && date
-
 # install AWS CLI
 RUN set -x \
   && pip3 install awscli --upgrade \
@@ -70,11 +63,22 @@ RUN set -x \
   && /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
 
 # list installed software versions
-RUN echo ''; echo '*** INSTALLED SOFTWARE VERSIONS ***';echo ''; \
+RUN set +x \
+  && echo ''; echo '*** INSTALLED SOFTWARE VERSIONS ***';echo ''; \
   cat /etc/*release; python3 --version; \
   docker --version; docker-compose version; \
   git --version; jq --version; pip3 --version; aws --version; \
   packer version; terraform version; echo '';
+
+RUN set -x \
+  && apt-get clean
+
+# set timezone to America/New_York
+RUN set -x \
+  && ls /usr/share/zoneinfo \
+  && cp /usr/share/zoneinfo/America/New_York /etc/localtime \
+  && echo "America/New_York" >  /etc/timezone \
+  && date
 
 # drop back to the regular jenkins user - good practice
 USER jenkins

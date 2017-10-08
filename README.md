@@ -1,6 +1,6 @@
 # Jenkins DevOps Toolkit
 
-The project's goal is to provide DevOps Engineers with a light-weight, ready-made, easily-modifiable DevOps toolkit in a Docker container. The container includes the latest copies of Jenkins, Jenkins plugins, and the most common DevOps tools frequently used with Jenkins. These DevOps tools include Git, AWS CLI, Terraform, Packer, Python, Docker, Docker Compose, cURL, and jq. The container is designed to be a short-lived, stood up, used for CI/CD, and torn down, and is ideal for the Cloud.
+The project's goal is to provide a light-weight, ready-made, easily-modifiable DevOps toolkit in a Docker container. The container toolkit includes the latest copies of Jenkins, Jenkins plugins, and the most common DevOps tools frequently used with Jenkins. These DevOps tools include Git, AWS CLI, Terraform, Packer, Python, Docker, Docker Compose, cURL, and jq. The container is designed to be a short-lived, stood up, used for CI/CD, and torn down, and is ideal for the Cloud.
 
 ![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/pics/jenkins_startup.png)
 
@@ -26,8 +26,6 @@ Based on latest packages as of 10/07/2017:
 - [tzdata](https://www.iana.org/time-zones) (time sync)
 
 ```text
-*** INSTALLED SOFTWARE VERSIONS ***
-
 PRETTY_NAME="Debian GNU/Linux 9 (stretch)"
 Python 3.5.3
 Docker version 17.09.0-ce, build afdb6d4
@@ -45,7 +43,7 @@ Terraform v0.10.7
 
 ## Architecture
 
-Fully configured, the Jenkins DevOps Docker container uses two bind-mounted directories on the host. The first, the Jenkins' home directory, contains all required configuration. The second directory is used for backups, created using the Jenkins Backup plugin. Additionally, Jenkins can back up its configuration, using the SCM Sync plugin, to GitHub. Both these backup methods require additional configuration.
+The Jenkins DevOps Toolkit Docker container uses two bind-mounted directories on the host. The first, the Jenkins' home directory, contains all required configuration. The second directory is used for backups, created using the Jenkins Backup plugin. Additionally, Jenkins can back up its configuration, using the SCM Sync plugin, to GitHub. Both these backup methods require additional configuration.
 
 ![Jenkins DevOps Docker Image Architecture](https://github.com/garystafford/jenkins-devops/blob/master/pics/architecture.png)
 
@@ -64,8 +62,12 @@ Jenkins will be running on [`http://localhost:8083`](http://localhost:8083).
 The `Dockerfile` loads plugins from the `plugin.txt`. Currently, it installs two backup plugins. You can add more plugins to this file, before building Docker image. See the Jenkins [Plugins Index](https://plugins.jenkins.io/) for more.
 
 ```text
-thinBackup:1.9
-backup:1.6.1
+Downloading thinBackup:1.9
+Downloading backup:1.6.1
+Downloading scm-sync-configuration:0.0.10
+---------------------------------------------------
+INFO: Successfully installed 3 plugins.
+---------------------------------------------------
 ```
 
 ## Optional: Create Docker Image
@@ -102,7 +104,7 @@ Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by 
 
 Install the SCM Sync Configuration Plugin (`scm-sync-configuration:0.0.10`)
 
-Set git/GitHub repo path to your config repo, for example: `git@github.com:<your_username>/jenkins-config.git`
+Set git/GitHub repo path to your config repo, for example: `https://<personal_access_token>@github.com/<your_username>/jenkins-config.git`
 
 ```bash
 docker exec -it $(docker ps | grep jenkins-devops | awk '{print $1}') \
@@ -151,7 +153,7 @@ To modify, build, and test locally, replacing my Docker Hub repo name swith your
 
 ```bash
 # build
-docker build -t garystafford/jenkins-devops:2017.10.07 .
+docker build --no-cache -t garystafford/jenkins-devops:2017.10.07 .
 
 # run temp copy only
 docker run -d --name jenkins-temp -p 8083:8080/tcp -p 50000:50000/tcp garystafford/jenkins-devops:2017.10.07
