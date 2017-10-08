@@ -64,9 +64,8 @@ The `Dockerfile` loads plugins from the `plugin.txt`. Currently, it installs two
 ```text
 Downloading thinBackup:1.9
 Downloading backup:1.6.1
-Downloading scm-sync-configuration:0.0.10
 ---------------------------------------------------
-INFO: Successfully installed 3 plugins.
+INFO: Successfully installed 2 plugins.
 ---------------------------------------------------
 ```
 
@@ -123,6 +122,12 @@ mkdir -p /tmp/jenkins_home/.ssh
 
 # used for git SCM Sync plugin
 cp ~/.ssh/id_rsa /tmp/jenkins_home/.ssh/id_rsa
+cp ~/.ssh/id_rsa.pub /tmp/jenkins_home/.ssh/id_rsa.pub
+
+# in container for cloning config if on github
+docker exec -it $(docker ps | grep jenkins-devops | awk '{print $1}') \
+  bash -c 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
+
 
 # used for Consul cluster project
 cp ~/.ssh/consul_aws_rsa* /tmp/jenkins_home/.ssh
