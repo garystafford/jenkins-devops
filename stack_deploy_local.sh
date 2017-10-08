@@ -3,11 +3,10 @@
 # Deploy Jenkins DevOps container locally
 # Not in swarm mode
 
-set -ex
+set -e
 
 # variables
 IMAGE_TAG="2017.10.07"
-JENKINS_CONTAINER=$(docker ps | grep jenkins-devops | awk '{print $1}')
 GIT_EMAIL="jenkins@jenkins.com"
 GIT_USER="jenkins"
 
@@ -25,6 +24,7 @@ docker-compose \
   --force-recreate -d
 
 # Configure Jenkins container
+JENKINS_CONTAINER=$(docker ps | grep jenkins-devops | awk '{print $1}')
 docker exec -it ${JENKINS_CONTAINER} \
   bash -c "mkdir /var/jenkins_home/backup/" || echo "Directory already exists..."
 docker exec -it ${JENKINS_CONTAINER} \
@@ -39,7 +39,7 @@ docker exec -it ${JENKINS_CONTAINER} \
 # docker image prune -f # clean up danglers...
 
 echo "Letting services start-up..."
-sleep 20
+sleep 30
 docker logs $(docker ps | grep jenkins-devops | awk '{print $1}')
 
 echo "Script completed..."
