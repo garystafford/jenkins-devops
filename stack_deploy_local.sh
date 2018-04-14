@@ -6,7 +6,7 @@
 set -e
 
 # variables
-IMAGE_TAG="2017.10.07"
+IMAGE_TAG="2018.04.13"
 GIT_EMAIL="jenkins@jenkins.com"
 GIT_USER="jenkins"
 
