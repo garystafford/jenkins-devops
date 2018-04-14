@@ -1,7 +1,7 @@
 FROM jenkins/jenkins:latest
 
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
-ENV REFRESHED_AT 2017-10-08
+ENV REFRESHED_AT 2017-04-13
 
 # switch to install packages via apt
 USER root
@@ -32,7 +32,8 @@ RUN set -x \
 
 # install Docker Compose
 RUN set -x \
-  && curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` > docker-compose \
+  && COMPOSE_VERSION="1.21.0" \
+  && curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m`" > docker-compose \
   && cp docker-compose /usr/local/bin/docker-compose \
   && chmod +x /usr/local/bin/docker-compose
 
@@ -43,18 +44,18 @@ RUN set -x \
 
 # install HasiCorp Packer
 RUN set -x \
-  && packer_version="1.1.0" \
-  && curl -O "https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip" \
-  && unzip packer_${packer_version}_linux_amd64.zip \
-  && rm -rf packer_${packer_version}_linux_amd64.zip \
+  && PACKER_VERSION="1.2.2" \
+  && curl -O "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip" \
+  && unzip packer_${PACKER_VERSION}_linux_amd64.zip \
+  && rm -rf packer_${PACKER_VERSION}_linux_amd64.zip \
   && mv packer /usr/bin
 
 # install HasiCorp Terraform
 RUN set -x \
-  && tf_version="0.10.7" \
-  && curl -O "https://releases.hashicorp.com/terraform/${tf_version}/terraform_${tf_version}_linux_amd64.zip" \
-  && unzip terraform_${tf_version}_linux_amd64.zip \
-  && rm -rf terraform_${tf_version}_linux_amd64.zip \
+  && TF_VERSION="0.11.7" \
+  && curl -O "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" \
+  && unzip terraform_${TF_VERSION}_linux_amd64.zip \
+  && rm -rf terraform_${TF_VERSION}_linux_amd64.zip \
   && mv terraform /usr/bin
 
 # install Jenkins plugins

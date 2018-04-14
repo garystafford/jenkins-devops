@@ -10,15 +10,15 @@ The `Jenkins DevOps Toolkit` image is based on the latest [`jenkins/jenkins:late
 
 ## Installed Tools
 
-Based on latest packages as of 10/07/2017:
+Based on latest packages as of 2018.04.13:
 
-- [AWS CLI](https://aws.amazon.com/cli/) v1.11.167
-- [Docker CE](https://docker.com/) v17.09.0-ce
-- [Docker Compose](https://docs.docker.com/compose/) v1.16.1
+- [AWS CLI](https://aws.amazon.com/cli/) v1.15.4
+- [Docker CE](https://docker.com/) v18.03.0-ce
+- [Docker Compose](https://docs.docker.com/compose/) v1.21.0
 - [Git](https://git-scm.com/) v2.11.0
-- [HashiCorp Packer](https://www.packer.io/) v1.1.0
-- [HashiCorp Terraform](https://www.terraform.io/) v0.10.7
-- [Jenkins](https://jenkins.io/) v2.82
+- [HashiCorp Packer](https://www.packer.io/) v1.2.2
+- [HashiCorp Terraform](https://www.terraform.io/) v0.11.7
+- [Jenkins](https://jenkins.io/) v2.116
 - [jq](https://stedolan.github.io/jq/) v1.5.1
 - [OpenNTPD](http://www.openntpd.org/) (time sync)
 - [pip3](https://pip.pypa.io/en/stable/#) v9.0.1
@@ -27,18 +27,23 @@ Based on latest packages as of 10/07/2017:
 
 ```text
 PRETTY_NAME="Debian GNU/Linux 9 (stretch)"
+NAME="Debian GNU/Linux"
+VERSION_ID="9"
+VERSION="9 (stretch)"
+ID=debian
+
 Python 3.5.3
-Docker version 17.09.0-ce, build afdb6d4
-docker-compose version 1.16.1, build 6d1ac21
-docker-py version: 2.5.1
-CPython version: 2.7.13
+Docker version 18.03.0-ce, build 0520e24
+docker-compose version 1.21.0, build 5920eb0
+docker-py version: 3.2.1
+CPython version: 3.6.5
 OpenSSL version: OpenSSL 1.0.1t  3 May 2016
 git version 2.11.0
 jq-1.5-1-a5b5cbe
 pip 9.0.1 from /usr/lib/python3/dist-packages (python 3.5)
-aws-cli/1.11.167 Python/3.5.3 Linux/4.9.49-moby botocore/1.7.25
-Packer v1.1.0
-Terraform v0.10.7
+aws-cli/1.15.4 Python/3.5.3 Linux/4.9.87-linuxkit-aufs botocore/1.10.4
+Packer v1.2.2
+Terraform v0.11.7
 ```
 
 ## Architecture
@@ -76,12 +81,12 @@ The latest `garystafford/jenkins-devops` image is available on [Docker Hub](http
 Optionally, to create a new image from the Dockerfile
 
 ```bash
-docker build -t garystafford/jenkins-devops:2017.10.07 .
+docker build -t garystafford/jenkins-devops:2018.04.13 .
 ```
 
 ## Run the Container
 
-Create a new container from `garystafford/jenkins-devops:2017.10.07` image
+Create a new container from `garystafford/jenkins-devops:2018.04.13` image
 
 ```bash
 sh ./stack_deploy_local.sh
@@ -158,13 +163,13 @@ To modify, build, and test locally, replacing my Docker Hub repo name swith your
 
 ```bash
 # build
-docker build --no-cache -t garystafford/jenkins-devops:2017.10.07 .
+docker build --no-cache -t garystafford/jenkins-devops:2018.04.13 .
 
 # run temp copy only
-docker run -d --name jenkins-temp -p 8083:8080/tcp -p 50000:50000/tcp garystafford/jenkins-devops:2017.10.07
+docker run -d --name jenkins-temp -p 8083:8080/tcp -p 50000:50000/tcp garystafford/jenkins-devops:2018.04.13
 
 # push
-docker push garystafford/jenkins-devops:2017.10.07
+docker push garystafford/jenkins-devops:2018.04.13
 
 # clean up container and local bind-mounted directory
 rm -rf /tmp/jenkins_home
