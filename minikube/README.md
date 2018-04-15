@@ -1,6 +1,6 @@
 # Minikube
 
-Before deploying to GKE, you should always test your application, as well as your Kubernetes resource files (secrets, deployments, services, namespaces, routerules, etc.) on minikube.
+Deploy Jenkins to k8s Minikube cluster.
 
 ## Deploy v2 to Minikube
 
@@ -17,12 +17,11 @@ sh ./part2-deploy-v2-dev.sh
 
 kubectl get pods -n devops
 
-kubectl exec -it jenkins-devops-f57bc8c55-7542r /bin/bash -n devops
+# get new password
 kubectl exec -it jenkins-devops-f57bc8c55-7542r -n devops \
   cat /var/jenkins_home/secrets/initialAdminPassword
 
-garystafford/jenkins12345
-install NodeJS
+# install NodeJS plugin
 
 # discover URL and port for to connect to v2
 # https://istio.io/docs/guides/bookinfo.html
@@ -30,9 +29,8 @@ install NodeJS
 export GATEWAY_URL=$(minikube ip):$(kubectl get svc istio-ingress -n istio-system -o 'jsonpath={.spec.ports[0].nodePort}')
 echo $GATEWAY_URL
 
-# smoke test election-v2
-curl $GATEWAY_URL/v2/
-curl $GATEWAY_URL/dev/v2/actuator/health && echo
+# smoke test
+curl $GATEWAY_URL
 
 # kubernetes dashboard
 minikube dashboard
