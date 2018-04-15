@@ -6,7 +6,7 @@ The project's goal is to provide a light-weight, ready-made, easily-modifiable D
 
 ![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/pics/jenkins_preview2.png)
 
-The `Jenkins DevOps Toolkit` image is based on the latest [`jenkins/jenkins:latest`](https://hub.docker.com/r/jenkins/jenkins/) Docker image. The Jenkins Docker image is based on [Debian GNU/Linux 9.1 (stretch)](https://wiki.debian.org/DebianStretch).
+The `Jenkins DevOps Toolkit` image is based on the latest [`jenkins/jenkins:latest`](https://hub.docker.com/r/jenkins/jenkins/) Docker image. The Jenkins Docker image is based on [Debian GNU/Linux 9 (stretch)](https://wiki.debian.org/DebianStretch).
 
 ## Installed Tools
 

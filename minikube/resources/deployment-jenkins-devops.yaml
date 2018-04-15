@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: devops
+  name: jenkins-devops
+spec:
+  replicas: 1
+  strategy: {}
+  selector:
+    matchLabels:
+      app: jenkins-devops
+  template:
+    metadata:
+      labels:
+        app: jenkins-devops
+    spec:
+      containers:
+      - name: jenkins-devops
+        image: jenkins/jenkins:latest
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
