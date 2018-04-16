@@ -2,11 +2,13 @@
 
 Deploy Jenkins to k8s Minikube cluster.
 
-## Deploy v2 to Minikube
+## Deploy Jenkins to Minikube
 
 ```bash
 # create cluster
 minikube start
+
+kubectl config use-context minikube
 
 # install Istio 0.7.1 without mTLS
 kubectl apply -f $ISTIO_HOME/install/kubernetes/istio.yaml
@@ -21,7 +23,12 @@ kubectl get pods -n devops
 kubectl exec -it jenkins-devops-f57bc8c55-7542r -n devops \
   cat /var/jenkins_home/secrets/initialAdminPassword
 
-# install NodeJS plugin
+# install NodeJS and thinBackup plugin
+
+# copy backup files from container to local drive
+kubectl cp \
+  devops/jenkins-devops-f57bc8c55-7542r:/tmp/FULL-2018-04-16_02-00 \
+  FULL-2018-04-16_02-0/
 
 # discover URL and port for to connect to v2
 # https://istio.io/docs/guides/bookinfo.html
