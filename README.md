@@ -1,6 +1,6 @@
 # Jenkins DevOps Toolkit
 
-The project's goal is to provide a light-weight, ready-made, easily-modifiable DevOps toolkit in a Docker container. The container toolkit includes the latest copies of Jenkins, Jenkins plugins, and the most common DevOps tools frequently used with Jenkins. These DevOps tools include Git, AWS CLI, Terraform, Packer, Python, Docker, Docker Compose, cURL, and jq. The container is designed to be a short-lived, stood up, used for CI/CD, and torn down, and is ideal for the Cloud.
+The project's goal is to provide a ready-made, easily-modifiable DevOps toolkit in a Docker container. The container toolkit includes the latest copies of Jenkins, Jenkins plugins, and the most common DevOps tools frequently used with Jenkins. These DevOps tools include Git, AWS CLI, Terraform, Packer, Python, Docker, Docker Compose, cURL, and jq. The container is designed to be a short-lived, stood up, used for CI/CD, and torn down, and is ideal for the Cloud.
 
 ![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/pics/jenkins_startup.png)
 
