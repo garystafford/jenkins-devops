@@ -25,6 +25,8 @@ Based on latest packages as of 2018.04.13:
 - [Python3](https://www.python.org/) v3.5.3
 - [tzdata](https://www.iana.org/time-zones) (time sync)
 
+Built Output
+
 ```text
 PRETTY_NAME="Debian GNU/Linux 9 (stretch)"
 NAME="Debian GNU/Linux"
@@ -65,6 +67,8 @@ Jenkins will be running on [`http://localhost:8083`](http://localhost:8083).
 ## Optional: Adding Jenkins Plugins
 
 The `Dockerfile` loads plugins from the `plugin.txt`. Currently, it installs two backup plugins. You can add more plugins to this file, before building Docker image. See the Jenkins [Plugins Index](https://plugins.jenkins.io/) for more.
+
+Built Output
 
 ```text
 Downloading thinBackup:1.9

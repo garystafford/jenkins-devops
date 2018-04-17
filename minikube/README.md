@@ -2,7 +2,7 @@
 
 Deploy Jenkins to k8s Minikube cluster.
 
-## Deploy Jenkins to Minikube
+## Deploy Jenkins to Minikube running Istio
 
 ```bash
 # create cluster
@@ -13,9 +13,8 @@ kubectl config use-context minikube
 # install Istio 0.7.1 without mTLS
 kubectl apply -f $ISTIO_HOME/install/kubernetes/istio.yaml
 
-# deploy v2 to local minikube dev environment
-sh ./part1-create-environment.sh
-sh ./part2-deploy-v2-dev.sh
+# deploy to local minikube dev environment
+sh ./deploy-jenkins-k8s.sh
 
 kubectl get pods -n devops
 
@@ -30,6 +29,8 @@ kubectl cp \
   devops/jenkins-devops-f57bc8c55-7542r:/tmp/FULL-2018-04-16_02-00 \
   FULL-2018-04-16_02-0/
 
+# mounting in storage volume on Node
+
 mkdir ~/jenkins_home_minikube
 
 minikube ssh
@@ -37,9 +38,10 @@ mkdir /tmp/jenkins_home
 chmod 777 /tmp/jenkins_home/
 exit
 
+# chmod 777 ~/jenkins_home_minikube
 minikube mount ~/jenkins_home_minikube:/tmp/jenkins_home
 
-# discover URL and port for to connect to v2
+# discover URL and port for to connect to Jenkins
 # https://istio.io/docs/guides/bookinfo.html
 # adjust for minikube ip
 export GATEWAY_URL=$(minikube ip):$(kubectl get svc istio-ingress -n istio-system -o 'jsonpath={.spec.ports[0].nodePort}')
