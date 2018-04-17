@@ -19,4 +19,12 @@ spec:
         image: jenkins/jenkins:latest
         ports:
         - containerPort: 8080
+        workingDir: /var/jenkins_home
+        volumeMounts:
+        - mountPath: /var/jenkins_home
+          name: jenkins-home
       restartPolicy: Always
+      volumes:
+      - name: jenkins-home
+        hostPath:
+          path: /tmp/jenkins_home

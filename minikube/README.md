@@ -30,6 +30,15 @@ kubectl cp \
   devops/jenkins-devops-f57bc8c55-7542r:/tmp/FULL-2018-04-16_02-00 \
   FULL-2018-04-16_02-0/
 
+mkdir ~/jenkins_home_minikube
+
+minikube ssh
+mkdir /tmp/jenkins_home
+chmod 777 /tmp/jenkins_home/
+exit
+
+minikube mount ~/jenkins_home_minikube:/tmp/jenkins_home
+
 # discover URL and port for to connect to v2
 # https://istio.io/docs/guides/bookinfo.html
 # adjust for minikube ip
