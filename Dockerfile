@@ -32,8 +32,8 @@ RUN set -x \
 
 # install Docker Compose
 RUN set -x \
-  && COMPOSE_VERSION="1.21.0" \
-  && curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m`" > docker-compose \
+  && DOCKER_COMPOSE_VERSION="1.21.0" \
+  && curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m`" > docker-compose \
   && cp docker-compose /usr/local/bin/docker-compose \
   && chmod +x /usr/local/bin/docker-compose
 
@@ -52,10 +52,10 @@ RUN set -x \
 
 # install HasiCorp Terraform
 RUN set -x \
-  && TF_VERSION="0.11.7" \
-  && curl -O "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" \
-  && unzip terraform_${TF_VERSION}_linux_amd64.zip \
-  && rm -rf terraform_${TF_VERSION}_linux_amd64.zip \
+  && TERRAFORM_VERSION="0.11.7" \
+  && curl -O "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
+  && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+  && rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
   && mv terraform /usr/bin
 
 # install Jenkins plugins

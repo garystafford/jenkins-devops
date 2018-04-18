@@ -22,7 +22,8 @@ kubectl get pods -n devops
 kubectl exec -it jenkins-devops-f57bc8c55-7542r -n devops \
   cat /var/jenkins_home/secrets/initialAdminPassword
 
-# install NodeJS and thinBackup plugin
+# install all default/recommended plug-ins
+# install NodeJS, Blue Ocean, GCloud SDK, ThinBackup plug-ins
 
 # copy backup files from container to local drive
 kubectl cp \
@@ -35,7 +36,14 @@ mkdir ~/jenkins_home_minikube
 
 minikube ssh
 mkdir /tmp/jenkins_home
-chmod 777 /tmp/jenkins_home/
+su -
+chmod -R 777 /tmp/jenkins_home/
+chown -hR root /tmp/jenkins_home/
+chgrp -hR root /tmp/jenkins_home/
+
+# https://stackoverflow.com/a/46097378/580268
+# scp ~/Downloads/FULL-2018-04-16_02-0/* docker@192.168.99.100:/tmp/jenkins_home/backups/
+# rm -rf /tmp/jenkins_home/*
 exit
 
 # chmod 777 ~/jenkins_home_minikube

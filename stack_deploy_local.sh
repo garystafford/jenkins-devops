@@ -38,8 +38,8 @@ docker exec -it ${JENKINS_CONTAINER} \
 # docker rm $(docker ps -a -f status=exited -q) || echo "No containers to delete..."
 # docker image prune -f # clean up danglers...
 
-echo "Letting services start-up..."
-sleep 30
+echo "Letting services start-up (sleep for 60 seconds)..."
+sleep 60
 docker logs $(docker ps | grep jenkins-devops | awk '{print $1}')
 
 echo "Script completed..."
