@@ -23,7 +23,8 @@ kubectl exec -it jenkins-devops-f57bc8c55-7542r -n devops \
   cat /var/jenkins_home/secrets/initialAdminPassword
 
 # install all default/recommended plug-ins
-# install NodeJS, Blue Ocean, GCloud SDK, ThinBackup plug-ins
+# install your own plugins, i.e.
+# NodeJS, Blue Ocean, GCloud SDK, SCM Sync Configuration, ThinBackup plug-ins
 
 # copy backup files from container to local drive
 kubectl cp \
