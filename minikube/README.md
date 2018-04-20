@@ -1,6 +1,6 @@
 # Minikube
 
-Deploy Jenkins to k8s Minikube cluster.
+Deploy jenkins:latest to k8s Minikube cluster.
 
 ## Deploy Jenkins to Minikube running Istio
 

@@ -24,7 +24,7 @@ docker-compose \
   --force-recreate -d
 
 # Configure Jenkins container
-JENKINS_CONTAINER=$(docker ps | grep jenkins-devops | awk '{print $1}')
+JENKINS_CONTAINER=$(docker ps | grep jenkops | awk '{print $1}')
 docker exec -it ${JENKINS_CONTAINER} \
   bash -c "mkdir /var/jenkins_home/backup/" || echo "Directory already exists..."
 docker exec -it ${JENKINS_CONTAINER} \
@@ -40,7 +40,7 @@ docker exec -it ${JENKINS_CONTAINER} \
 
 echo "Letting services start-up (sleep for 60 seconds)..."
 sleep 60
-docker logs $(docker ps | grep jenkins-devops | awk '{print $1}')
+docker logs $(docker ps | grep jenkops | awk '{print $1}')
 
 echo "Script completed..."
 

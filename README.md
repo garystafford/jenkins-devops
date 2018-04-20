@@ -2,15 +2,15 @@
 
 The project's goal is to provide a ready-made, easily-modifiable DevOps toolkit in a Docker container. The container toolkit includes the latest copies of Jenkins, Jenkins plugins, and the most common DevOps tools frequently used with Jenkins. These DevOps tools include Git, AWS CLI, Terraform, Packer, Python, Docker, Docker Compose, cURL, and jq. The container is designed to be a short-lived, stood up, used for CI/CD, and torn down, and is ideal for the Cloud.
 
-![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/pics/jenkins_startup.png)
+![Jenkins UI Preview](pics/jenkins_startup.png)
 
-![Jenkins UI Preview](https://github.com/garystafford/jenkins-devops/blob/master/pics/jenkins_preview2.png)
+![Jenkins UI Preview](pics/jenkins_preview2.png)
 
 The `Jenkins DevOps Toolkit` image is based on the latest [`jenkins/jenkins:latest`](https://hub.docker.com/r/jenkins/jenkins/) Docker image. The Jenkins Docker image is based on [Debian GNU/Linux 9 (stretch)](https://wiki.debian.org/DebianStretch).
 
 ## Installed Tools
 
-Based on latest packages as of 2018.04.13:
+Based on latest packages as of 2018.04.19:
 
 - [AWS CLI](https://aws.amazon.com/cli/) v1.15.4
 - [Docker CE](https://docker.com/) v18.03.0-ce
@@ -28,11 +28,16 @@ Based on latest packages as of 2018.04.13:
 Built Output
 
 ```text
+*** INSTALLED SOFTWARE VERSIONS ***
+
 PRETTY_NAME="Debian GNU/Linux 9 (stretch)"
 NAME="Debian GNU/Linux"
 VERSION_ID="9"
 VERSION="9 (stretch)"
 ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
 
 Python 3.5.3
 Docker version 18.03.0-ce, build 0520e24
@@ -85,12 +90,12 @@ The latest `garystafford/jenkins-devops` image is available on [Docker Hub](http
 Optionally, to create a new image from the Dockerfile
 
 ```bash
-docker build -t garystafford/jenkins-devops:2018.04.13 .
+docker build -t garystafford/jenkins-devops:2018.04.19 .
 ```
 
 ## Run the Container
 
-Create a new container from `garystafford/jenkins-devops:2018.04.13` image
+Create a new container from `garystafford/jenkins-devops:2018.04.19` image
 
 ```bash
 sh ./stack_deploy_local.sh
@@ -167,13 +172,13 @@ To modify, build, and test locally, replacing my Docker Hub repo name swith your
 
 ```bash
 # build
-docker build --no-cache -t garystafford/jenkins-devops:2018.04.13 .
+docker build --no-cache -t garystafford/jenkins-devops:2018.04.19 .
 
 # run temp copy only
-docker run -d --name jenkins-temp -p 8083:8080/tcp -p 50000:50000/tcp garystafford/jenkins-devops:2018.04.13
+docker run -d --name jenkins-temp -p 8083:8080/tcp -p 50000:50000/tcp garystafford/jenkins-devops:2018.04.19
 
 # push
-docker push garystafford/jenkins-devops:2018.04.13
+docker push garystafford/jenkins-devops:2018.04.19
 
 # clean up container and local bind-mounted directory
 rm -rf /tmp/jenkins_home
