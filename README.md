@@ -121,10 +121,10 @@ Set git/GitHub repo path to your config repo, for example: `https://<personal_ac
 
 ```bash
 docker exec -it $(docker ps | grep jenkins-devops | awk '{print $1}') \
-  bash -c 'git config --global user.email "<your@email.com>"'
+  bash -c 'git config --global user.email "garystafford@rochester.rr.com"'
 
 docker exec -it $(docker ps | grep jenkins-devops | awk '{print $1}') \
-  bash -c 'git config --global user.name "<your_username>"'
+  bash -c 'git config --global user.name "Gary A. Stafford"'
 ```
 
 ## Optional: AWS SSL Keys

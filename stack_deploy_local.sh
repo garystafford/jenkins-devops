@@ -15,13 +15,16 @@ mkdir -p /tmp/jenkins_home/.ssh/ || echo "Directory already exists..."
 mkdir -p /tmp/jenkins_home/backup/ || echo "Directory already exists..."
 
 # ensure latest image is pulled...
-docker pull garystafford/jenkins-devops:${IMAGE_TAG}
+# docker pull garystafford/jenkins-devops:${IMAGE_TAG}
 
 # create Jenkins container
 docker-compose \
   -f docker-compose-local.yml \
   -p devopstack up \
   --force-recreate -d
+
+echo "Letting services start-up (sleep for 60 seconds)..."
+sleep 60
 
 # Configure Jenkins container
 JENKINS_CONTAINER=$(docker ps | grep jenkops | awk '{print $1}')
@@ -38,8 +41,6 @@ docker exec -it ${JENKINS_CONTAINER} \
 # docker rm $(docker ps -a -f status=exited -q) || echo "No containers to delete..."
 # docker image prune -f # clean up danglers...
 
-echo "Letting services start-up (sleep for 60 seconds)..."
-sleep 60
 docker logs $(docker ps | grep jenkops | awk '{print $1}')
 
 echo "Script completed..."

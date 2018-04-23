@@ -21,7 +21,7 @@ USER root
 RUN set +x \
   && apt-get update \
   && apt-get -y upgrade \
-  && apt-get -y install openrc git openntpd tzdata python3 python3-pip jq
+  && apt-get -y install openrc openntpd tzdata python3 python3-pip jq
 
 # update and install Docker CE and associated packages
 RUN set +x \
@@ -35,10 +35,12 @@ RUN set +x \
     stable" \
   && apt-get update \
   && apt-get -y upgrade \
-  && apt-get install -y docker-ce
+  && apt-get install -y docker-ce \
+  && systemctl enable docker \
+  && chgrp jenkins /var/run/docker.sock
 
 RUN set +x \
-  && usermod -aG staff,docker jenkins \
+    && usermod -aG staff,docker jenkins \
   && exec bash
 
 # install Docker Compose
@@ -75,7 +77,7 @@ RUN set +x \
 RUN set +x \
   && echo ''; echo '*** INSTALLED SOFTWARE VERSIONS ***';echo ''; \
   cat /etc/*release; python3 --version; \
-  docker --version; docker-compose version; \
+  docker version; docker-compose version; \
   git --version; jq --version; pip3 --version; aws --version; \
   packer version; terraform version; echo '';
 

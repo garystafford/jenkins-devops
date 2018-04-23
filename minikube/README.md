@@ -24,7 +24,8 @@ kubectl exec -it jenkins-devops-f57bc8c55-7542r -n devops \
 
 # install all default/recommended plug-ins
 # install your own plugins, i.e.
-# NodeJS, Blue Ocean, GCloud SDK, SCM Sync Configuration, ThinBackup plug-ins
+# NodeJS, Blue Ocean, GCloud SDK, SCM Sync Configuration,
+# SonarQube, Slack, ThinBackup plug-ins
 
 # copy backup files from container to local drive
 kubectl cp \
