@@ -36,9 +36,9 @@ RUN set +x \
   && apt-get update \
   && apt-get -y upgrade \
   && apt-get install -y docker-ce \
-  && systemctl enable docker \
-  && chgrp jenkins /var/run/docker.sock
+  && systemctl enable docker
 
+# set permissions for jenkins user
 RUN set +x \
     && usermod -aG staff,docker jenkins \
   && exec bash

@@ -6,7 +6,7 @@
 set -e
 
 # variables
-IMAGE_TAG="2018.04.13"
+IMAGE_TAG="2018.04.19"
 GIT_EMAIL="jenkins@jenkins.com"
 GIT_USER="jenkins"
 
@@ -31,15 +31,13 @@ JENKINS_CONTAINER=$(docker ps | grep jenkops | awk '{print $1}')
 docker exec -it ${JENKINS_CONTAINER} \
   bash -c "mkdir /var/jenkins_home/backup/" || echo "Directory already exists..."
 docker exec -it ${JENKINS_CONTAINER} \
-  bash -c "git config --global user.email ${GIT_EMAIL}"
-docker exec -it ${JENKINS_CONTAINER} \
-  bash -c "git config --global user.name ${GIT_USER}"
+  bash -c "git config --global user.email ${GIT_EMAIL} && git config --global user.name ${GIT_USER}"
+docker exec -it -u root ${JENKINS_CONTAINER} \
+  bash -c "ls -al /var/run/docker.sock && chgrp jenkins /var/run/docker.sock"
+
 # docker exec -u root -it ${JENKINS_CONTAINER} \
 # bash -c "git clone git@github.com:garystafford/jenkins-config.git scm-sync-configuration/checkoutConfiguration" \
 # || echo 'An error occurred?!'
-
-# docker rm $(docker ps -a -f status=exited -q) || echo "No containers to delete..."
-# docker image prune -f # clean up danglers...
 
 docker logs $(docker ps | grep jenkops | awk '{print $1}')
 
@@ -47,4 +45,4 @@ echo "Script completed..."
 
 echo "Jenkins available at: http://localhost:8083"
 ADMIN_PASSWORD=$(cat /tmp/jenkins_home/secrets/initialAdminPassword)
-echo "Unlock Jenkins: ${ADMIN_PASSWORD}"
+echo "Initial Admin Password: ${ADMIN_PASSWORD}"
