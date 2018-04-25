@@ -45,7 +45,7 @@ RUN set +x \
     && usermod -aG staff,docker jenkins \
   && exec bash
 
-# install google-cloud-sdk
+# install google-cloud-sdk (gcloud and kubectl)
 RUN set +x \
   && wget "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GOOGLE_CLOUD_SDK}-linux-x86_64.tar.gz" \
   && tar -xvzf google-cloud-sdk-${GOOGLE_CLOUD_SDK}-linux-x86_64.tar.gz \
