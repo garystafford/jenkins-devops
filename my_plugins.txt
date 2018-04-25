@@ -1,0 +1,8 @@
+Blue Ocean
+Copy Artifact
+GCloud SDK
+Kubernetes Continuous Deploy
+NodeJS
+SCM Sync Configuration
+Slack
+SonarQube Scanner

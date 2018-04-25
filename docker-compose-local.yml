@@ -12,8 +12,8 @@ services:
     networks:
     - demo_overlay_net
     volumes:
-    - /tmp/jenkins_home:/var/jenkins_home
-    - /tmp/backup/hudson:/tmp/backup/hudson
+    - ~/jenkins_home:/var/jenkins_home
+    - ~/jenkins_backup:/tmp/backup/hudson
     - /var/run/docker.sock:/var/run/docker.sock
 
 networks:

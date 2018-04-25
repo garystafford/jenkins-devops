@@ -1,17 +1,18 @@
 FROM jenkins/jenkins:latest
 
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
-ENV REFRESHED_AT 2018-04-19
+ENV REFRESHED_AT 2018-04-25
 
 # set variables - *** CHANGE ME ***
-ARG docker_compose_version="1.21.0"
-ARG packer_version="1.2.2"
-ARG terraform_version="0.11.7"
+ARG istio_version="0.7.1"
+ARG google_cloud_sdk="199.0.0"
 ARG timezone="America/New_York"
 
-ENV DOCKER_COMPOSE_VERSION $docker_compose_version
-ENV PACKER_VERSION $packer_version
-ENV TERRAFORM_VERSION $terraform_version
+ENV ISTIO_VERSION $istio_version
+ENV ISTIO_HOME "/bin/istio-${ISTIO_VERSION}"
+ENV GOOGLE_CLOUD_SDK $google_cloud_sdk
+ENV GOOGLE_CLOUD_SDK_HOME="/bin/google-cloud-sdk"
+ENV PATH="${ISTIO_HOME}/bin:${GOOGLE_CLOUD_SDK_HOME}/bin:${PATH}"
 ENV TIMEZONE $timezone
 
 # switch to install packages via apt
@@ -44,32 +45,25 @@ RUN set +x \
     && usermod -aG staff,docker jenkins \
   && exec bash
 
-# install Docker Compose
+# install google-cloud-sdk
 RUN set +x \
-  && curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m`" > docker-compose \
-  && cp docker-compose /bin/docker-compose \
-  && chmod +x /bin/docker-compose
+  && wget "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GOOGLE_CLOUD_SDK}-linux-x86_64.tar.gz" \
+  && tar -xvzf google-cloud-sdk-${GOOGLE_CLOUD_SDK}-linux-x86_64.tar.gz \
+  && rm -rf google-cloud-sdk-${GOOGLE_CLOUD_SDK}-linux-x86_64.tar.gz \
+  && mv google-cloud-sdk /bin \
+  && sh ./bin/google-cloud-sdk/install.sh \
+      --usage-reporting no \
+      --additional-components kubectl alpha beta \
+      --quiet
 
-# install AWS CLI
+# install Istio
 RUN set +x \
-  && pip3 install awscli --upgrade \
-  && exec bash
+  && wget "https://github.com/istio/istio/releases/download/${ISTIO_VERSION}/istio-${ISTIO_VERSION}-linux.tar.gz" \
+  && tar -xvzf istio-${ISTIO_VERSION}-linux.tar.gz \
+  && rm -rf istio-${ISTIO_VERSION}-linux.tar.gz \
+  && mv istio-${ISTIO_VERSION} /bin
 
-# install HasiCorp Packer
-RUN set +x \
-  && wget "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip" \
-  && unzip packer_${PACKER_VERSION}_linux_amd64.zip \
-  && rm -rf packer_${PACKER_VERSION}_linux_amd64.zip \
-  && mv packer /bin
-
-# install HasiCorp Terraform
-RUN set +x \
-  && wget "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
-  && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
-  && rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
-  && mv terraform /bin
-
-# install Jenkins plugins
+# install jenkins plugins
 COPY plugins.txt /usr/share/jenkins/plugins.txt
 RUN set +x \
   && /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
@@ -78,9 +72,8 @@ RUN set +x \
 RUN set +x \
   && echo ''; echo '*** INSTALLED SOFTWARE VERSIONS ***';echo ''; \
   cat /etc/*release; python3 --version; \
-  docker version; docker-compose version; \
-  git --version; jq --version; pip3 --version; aws --version; \
-  packer version; terraform version; echo '';
+  docker version; git --version; jq --version; \
+  kubectl version; gcloud version; istioctl version; echo '';
 
 RUN set +x \
   && apt-get clean

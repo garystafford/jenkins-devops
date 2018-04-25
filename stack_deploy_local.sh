@@ -11,8 +11,8 @@ GIT_EMAIL="jenkins@jenkins.com"
 GIT_USER="jenkins"
 
 # Make local bind-mounted directories
-mkdir -p /tmp/jenkins_home/.ssh/ || echo "Directory already exists..."
-mkdir -p /tmp/jenkins_home/backup/ || echo "Directory already exists..."
+mkdir -p ~/jenkins_home/.ssh/ || echo "Directory already exists..."
+mkdir -p ~/jenkins_home/backup/ || echo "Directory already exists..."
 
 # ensure latest image is pulled...
 # docker pull garystafford/jenkins-devops:${IMAGE_TAG}
@@ -44,5 +44,5 @@ docker logs $(docker ps | grep jenkops | awk '{print $1}')
 echo "Script completed..."
 
 echo "Jenkins available at: http://localhost:8083"
-ADMIN_PASSWORD=$(cat /tmp/jenkins_home/secrets/initialAdminPassword)
+ADMIN_PASSWORD=$(cat ~/jenkins_home/secrets/initialAdminPassword)
 echo "Initial Admin Password: ${ADMIN_PASSWORD}"

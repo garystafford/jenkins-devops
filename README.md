@@ -107,9 +107,9 @@ Check logs
 docker logs $(docker ps | grep jenkins-devops | awk '{print $1}')
 ```
 
-This script also creates local directories `/tmp/jenkins_home/.ssh/` and `/tmp/jenkins_home/backups/`.<br>
-All relevant Jenkins files are stored in bind-mounted `/tmp/jenkins_home/` directory.<br>
-Backups are saved to the bind-mounted `/tmp/jenkins_home/backups/` host directory, using the Jenkins' [backup](https://wiki.jenkins-ci.org/display/JENKINS/Backup+Plugin) plugin.
+This script also creates local directories `~/jenkins_home/` and `~/jenkins_backup/`.<br>
+All relevant Jenkins files are stored in bind-mounted `~/jenkins_home/` directory.<br>
+Backups are saved to the bind-mounted `~/jenkins_backup/` host directory, using the Jenkins' [backup](https://wiki.jenkins-ci.org/display/JENKINS/Backup+Plugin) plugin.
 
 Jenkins will be running on [`http://localhost:8083`](http://localhost:8083), by default.
 
@@ -132,19 +132,18 @@ docker exec -it $(docker ps | grep jenkins-devops | awk '{print $1}') \
 Copy any required AWS SSL key pairs to bind-mounted `jenkins_home` directory.
 
 ```bash
-mkdir -p /tmp/jenkins_home/.ssh
+mkdir -p ~/jenkins_home/.ssh
 
 # used for git SCM Sync plugin
-cp ~/.ssh/id_rsa /tmp/jenkins_home/.ssh/id_rsa
-cp ~/.ssh/id_rsa.pub /tmp/jenkins_home/.ssh/id_rsa.pub
+cp ~/.ssh/id_rsa ~/jenkins_home/.ssh/id_rsa
+cp ~/.ssh/id_rsa.pub ~/jenkins_home/.ssh/id_rsa.pub
 
 # in container for cloning config if on github
 docker exec -it $(docker ps | grep jenkins-devops | awk '{print $1}') \
   bash -c 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
 
-
 # used for Consul cluster project
-cp ~/.ssh/consul_aws_rsa* /tmp/jenkins_home/.ssh
+cp ~/.ssh/consul_aws_rsa* ~/jenkins_home/.ssh
 ```
 
 ## Optional: AWS Credentials
@@ -153,7 +152,7 @@ Copy any required AWS credentials to bind-mounted `jenkins_home` directory
 
 ```bash
 # used to connect to AWS with Packer/Terraform
-cp ~/credentials/jenkins_credentials.env /tmp/jenkins_home/
+cp ~/credentials/jenkins_credentials.env ~/jenkins_home/
 ```
 
 ## Troubleshooting
@@ -168,7 +167,7 @@ docker run -it --rm --privileged \
 
 ## Further Development
 
-To modify, build, and test locally, replacing my Docker Hub repo name swith your own:
+To modify, build, and test locally, replacing my Docker Hub repo name switch your own:
 
 ```bash
 # build
@@ -181,7 +180,7 @@ docker run -d --name jenkins-temp -p 8083:8080/tcp -p 50000:50000/tcp garystaffo
 docker push garystafford/jenkins-devops:2018.04.19
 
 # clean up container and local bind-mounted directory
-rm -rf /tmp/jenkins_home
+rm -rf ~/jenkins_home
 docker rm -f devopstack_jenkins-devops_1
 ```
 
