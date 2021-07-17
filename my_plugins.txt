@@ -6,3 +6,5 @@ NodeJS
 SCM Sync Configuration
 Slack
 SonarQube Scanner
+thinBackup
+backup

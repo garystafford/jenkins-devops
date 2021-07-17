@@ -1,11 +1,11 @@
 FROM jenkins/jenkins:latest
 
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
-ENV REFRESHED_AT 2018-04-25
+ENV REFRESHED_AT 2019-03-11
 
 # set variables - *** CHANGE ME ***
-ARG istio_version="0.7.1"
-ARG google_cloud_sdk="199.0.0"
+ARG istio_version="1.0.6"
+ARG google_cloud_sdk="237.0.0"
 ARG timezone="America/New_York"
 
 ENV ISTIO_VERSION $istio_version
